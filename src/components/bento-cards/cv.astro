@@ -1,0 +1,16 @@
+---
+import ExternalLink from "../global/external-link.astro";
+import ArrowIcon from "../global/icons/arrow-icon.astro";
+import { getI18N } from "../../i18n";
+const i18n = getI18N(Astro.url.pathname);
+---
+
+<div id='cv-card' class='cv-card smax-w-[276px] flex flex-col gap-4 justify-between bg-primary text-white rounded-card p-6 size-full'>
+  <div class='flex flex-col gap-2 justify-between'>
+    <h2 class='text-3xl font-bold uppercase'>{i18n.ME_SECTION.CV_SECTION.TITLE}</h2>
+    <p class=''>{i18n.ME_SECTION.CV_SECTION.DESCRIPTION}</p>
+  </div>
+  <button class='size-fit bg-secondary rounded-full p-2 cursor-pointer hover:opacity-50 hover:scale-90 transition-all duration-300 ease-out'>
+    <ArrowIcon color='var(--color-primary)' />
+  </button>
+</div>

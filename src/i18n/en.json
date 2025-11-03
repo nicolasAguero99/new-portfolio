@@ -1,0 +1,34 @@
+{
+  "MAIN_TITLE": "Full Stack Developer",
+  "ME_SECTION": {
+    "LABEL": "Developer & Web Designer",
+    "GAME_SECTION": {
+      "START_BUTTON": "press {{key}} to jump",
+      "EASTER_EGG": "Can you reach 10 points?",
+      "GAME_OVER": "Game over!",
+      "GAME_WIN": "You win!"
+    },
+    "CV_SECTION": {
+      "TITLE": "CV",
+      "DESCRIPTION": "See and download my CV."
+    }
+  },
+  "ABOUT_ME_SECTION": {
+    "TITLE": "About me",
+    "DESCRIPTION": "Full-Stack Developer with {{1 year}} of formal labor experience and {{+5 years}} of self-taught/academic experience in own solutions."
+  },
+  "SKILLS_SECTION": {
+    "TITLE": "Skills"
+  },
+  "EXPERIENCE_SECTION": {
+    "TITLE": "Experience & Education",
+    "EDUCATION": "Education",
+    "EXPERIENCE": "Experience"
+  },
+  "PROJECTS_SECTION": {
+    "TITLE": "Featured Projects"
+  },
+  "CONTACT_SECTION": {
+    "TITLE": "Contact"
+  }
+}

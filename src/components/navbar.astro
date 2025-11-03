@@ -1,0 +1,105 @@
+---
+import { NAV_LINKS } from "../constants/constants";
+import GlobeIcon from "./global/icons/globe-icon.astro";
+import LogoNa from "./global/icons/logo-na.astro";
+import MoonIcon from "./global/icons/moon-icon.astro";
+const currentUrl = Astro.url.pathname;
+const lang = currentUrl.startsWith("/en") ? "en" : "es";
+import { pathWithLanguage } from "../i18n";
+---
+
+<header id='navbar' class={`flex justify-center items-center w-full`}>
+  <nav class='flex gap-8 items-center justify-between w-full'>
+    <a href='/'>
+      <LogoNa color='var(--color-logo-na)' />
+    </a>
+    <ul
+      class='max-[900px]:hidden flex gap-4 items-center bg-primary rounded-full p-2'
+    >
+      {
+        NAV_LINKS.map((link) => (
+          <li
+            class={`rounded-full py-0.5 px-3 ${link.href === Astro.url.pathname.replace("/en", "") ? "bg-secondary text-primary font-semibold" : "text-white"}`}
+          >
+            <a href={pathWithLanguage(lang, link.href)}>{link.label}</a>
+          </li>
+        ))
+      }
+    </ul>
+    <div class='flex gap-4 items-center'>
+      <button
+        id='dark-mode-btn'
+        class='bg-primary rounded-full p-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed'
+      >
+        <MoonIcon />
+      </button>
+      <a
+        href={lang === "en"
+          ? pathWithLanguage("es", Astro.url.pathname.replace("/en", ""))
+          : pathWithLanguage("en", Astro.url.pathname)}
+        id='language-btn'
+        class='bg-primary rounded-full p-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed'
+      >
+        <GlobeIcon />
+      </a>
+    </div>
+  </nav>
+</header>
+
+<script>
+  // const newLanguage = currentLanguage.includes("en") ? "es" : "en";
+  // const handleChangeLanguage = () => {
+  //   document.documentElement.lang = newLanguage;
+  //   window.dispatchEvent(
+  //     new CustomEvent("translate-page", {
+  //       detail: { newValue: newLanguage, executeTranslateAnimation: true },
+  //     })
+  //   );
+  // };
+
+  // document
+  //   .getElementById("language-btn")
+  //   ?.addEventListener("click", handleChangeLanguage);
+
+  const handleChangeTheme = () => {
+    (document.getElementById("dark-mode-btn") as HTMLButtonElement).disabled =
+      true;
+    document.getElementById("dark-mode-animation")?.classList.remove("hidden");
+    const darkModeLS = localStorage.getItem("dark-mode") || "light";
+    // const darkModeLS = 'light';
+    const newDarkMode = darkModeLS === "light" ? "dark" : "light";
+    const colorChangeThemeToReverse =
+      newDarkMode === "dark"
+        ? "var(--color-background-dark)"
+        : "var(--color-secondary)";
+    const colorTextBorder =
+      newDarkMode === "dark"
+        ? "var(--color-secondary)"
+        : "var(--color-change-theme-to)";
+    document.documentElement.style.setProperty(
+      "--color-change-theme-to-reverse",
+      colorChangeThemeToReverse
+    );
+    document.documentElement.style.setProperty(
+      "--color-text-border",
+      colorTextBorder
+    );
+    setTimeout(() => {
+      document.documentElement.style.setProperty(
+        "--color-external-link-background",
+        colorChangeThemeToReverse
+      );
+    }, 1250);
+
+    window.dispatchEvent(
+      new CustomEvent("change-theme", { detail: { newValue: newDarkMode } })
+    );
+    localStorage.setItem("dark-mode", newDarkMode);
+  };
+
+  document.addEventListener("astro:page-load", () => {
+    document
+      .getElementById("dark-mode-btn")
+      ?.addEventListener("click", handleChangeTheme);
+  });
+</script>

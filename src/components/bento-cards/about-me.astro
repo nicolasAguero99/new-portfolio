@@ -1,0 +1,36 @@
+---
+import ArrowIcon from "../global/icons/arrow-icon.astro";
+import { getI18N } from "../../i18n";
+import ExternalLink from "../global/external-link.astro";
+import ShapeExternalLink from "../global/icons/shape-external-link.astro";
+const i18n = getI18N(Astro.url.pathname);
+---
+
+<div
+  id='about-me-card'
+  class='about-me-card relative flex flex-col gap-4 bg-primary text-white max-[600px]:rounded-card min-[600px]:rounded-r-card min-[900px]:rounded-card p-6'
+>
+  <div
+    class='absolute -bottom-1 -right-1 size-14 flex items-center justify-center'
+  >
+    <div class='absolute top-[-20px] right-[4px] size-18'>
+      <ShapeExternalLink color='var(--color-external-link-background)' />
+    </div>
+    <ExternalLink href={`/experience`} color='var(--color-secondary)' />
+  </div>
+  <h2 class='text-3xl font-bold uppercase'>{i18n.ABOUT_ME_SECTION.TITLE}</h2>
+  <p id='description' class=''></p>
+</div>
+
+<script define:vars={{ i18n }}>
+  document.addEventListener("astro:page-load", () => {
+    const description = i18n.ABOUT_ME_SECTION.DESCRIPTION.replace(
+      "{{1 año}}",
+      "<strong>1 año</strong>"
+    ).replace("{{+5 años}}", "<strong>+5 años</strong>");
+
+    const descriptionElement = document.querySelector("#description");
+    if (!descriptionElement) return;
+    descriptionElement.innerHTML = description;
+  });
+</script>

@@ -1,0 +1,43 @@
+---
+import { getI18N } from "../../i18n";
+import ArrowIcon from "../global/icons/arrow-icon.astro";
+const i18n = getI18N(Astro.url.pathname);
+---
+
+<div
+  id='me-card'
+  class='me-card bg-secondary text-secondary rounded-card relative z-30 flex min-[1180px]:flex-col justify-start min-[1180px]:overflow-hidden'
+>
+  <div class='relative size-full'>
+    <img
+      src={"/images/me-photo.jpg"}
+      alt='Nicolás Agüero'
+      class='w-full max-[900px]:min-w-[200px] max-[600px]:rounded-card max-[600px]:h-auto max-[900px]:rounded-l-card max-[1180px]:h-[300px] min-[1180px]:aspect-square object-cover max-[1180px]:rounded-s-card min-[1180px]:rounded-t-card max-[1180px]:top-0 h-full z-20'
+    />
+    <h2 id='me-name' class='min-[900px]:hidden absolute bottom-0 left-0 right-0 text-3xl min-[600px]:text-xl text-center font-bold uppercase text-white bg-primary p-4 max-[600px]:rounded-b-card min-[600px]:rounded-bl-card'>Nicolás Agüero</h2>
+  </div>
+  <!-- <div
+    class='max-[1180px]:hidden absolute bottom-0 left-0 right-0 h-[300px] rounded-b-card background-gradient-photo z-10'
+  >
+  </div> -->
+  <div
+    class='max-[900px]:hidden flex flex-col max-[1180px]:justify-between max-[1180px]:items-start gap-3 bg-primary min-[1180px]:rounded-b-card p-6 w-full min-[1180px]:text-centerå max-[1180px]:rounded-e-card z-10'
+  >
+    <div class='flex flex-col gap-3 min-[1180px]:items-center'>
+      <span
+        class='w-fit text-secondary min-[1180px]:text-sm text-xs border border-secondary rounded-full px-3 py-0.5 max-[1180px]:hidden'
+      >
+        {i18n.ME_SECTION.LABEL}
+      </span>
+      <h2 id='me-name' class='text-3xl font-bold uppercase'>Nicolás Agüero</h2>
+    </div>
+    <button
+      class='min-[1180px]:hidden size-fit px-4 py-1 text-secondary text-sm border border-secondary rounded-full flex items-center gap-2 ring-offset-0 ring-1 hover:ring-2 hover:ring-offset-4 ring-offset-primary hover:[&>span]:translate-x-1 transition-all duration-300 ease-out cursor-pointer'
+    >
+      Ver CV
+      <span class='transition-transform duration-300 ease-out'>
+        <ArrowIcon color='var(--color-secondary)' size='12' />
+      </span>
+    </button>
+  </div>
+</div>

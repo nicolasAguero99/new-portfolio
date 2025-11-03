@@ -1,0 +1,21 @@
+---
+import { EXPERIENCE_ITEMS } from "../../constants/constants";
+import { getI18N } from "../../i18n";
+const i18n = getI18N(Astro.url.pathname);
+const currentLanguage = Astro.url.pathname.startsWith("/en") ? "en" : "es";
+---
+
+<div class='experience-card relative flex flex-col justify-between gap-4 bg-primary text-white rounded-card p-6 max-[900px]:order-1'>
+  <div class='flex flex-col gap-2'>
+  <h2 class='text-3xl font-bold uppercase'>{i18n.EXPERIENCE_SECTION.EXPERIENCE}</h2>
+    <p class='text-sm text-tertiary'>{EXPERIENCE_ITEMS[currentLanguage][0].company}</p>
+    <h3 class='text-2xl font-medium'>{EXPERIENCE_ITEMS[currentLanguage][0].title}</h3>
+    <p class='text-sm text-tertiary'>{EXPERIENCE_ITEMS[currentLanguage][0].date}</p>
+    <p class='font-light mt-2 max-[1100px]:text-sm'>{EXPERIENCE_ITEMS[currentLanguage][0].description}</p>
+  </div>
+    <div class='flex flex-wrap gap-2'>
+      {EXPERIENCE_ITEMS[currentLanguage][0].skills.map((skill) => (
+        <span class='text-sm text-secondary border border-secondary px-3 rounded-full'>{skill}</span>
+      ))}
+  </div>
+</div>

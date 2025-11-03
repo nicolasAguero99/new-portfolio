@@ -1,0 +1,471 @@
+@import url("https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Fira+Code:wght@300..700&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Inconsolata:wght@200..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+@import "tailwindcss";
+@plugin "@midudev/tailwind-animations";
+
+@theme {
+  --color-primary: #222222;
+  --color-secondary: #f4f4f4;
+  --color-tertiary: #bababa;
+  --color-background: #f4f4f4;
+  --color-background-dark: #111111;
+  --radius-card: 24px;
+  --animation-all-text: none;
+  --color-dark-mode-animation: var(--color-background-dark);
+  --color-change-theme-to: var(--color-background);
+  --color-change-theme-to-reverse: var(--color-background-dark);
+  --color-logo-na: var(--color-primary);
+  --color-text-border: var(--color-background);
+  --color-external-link-background: var(--color-background);
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--color-change-theme-to);
+}
+
+h2 {
+  transition: color 0.5s ease;
+}
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 1fr;
+  gap: 1rem;
+  height: 100%;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.bento-left-column {
+  display: grid;
+  grid-template-rows: 1fr;
+  gap: 1rem;
+  height: 100%;
+}
+
+.bento-right-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1rem;
+  /* height: 100%; */
+}
+
+.bento-right-column-top {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.bento-grid-main {
+  display: grid;
+  flex-direction: 1fr;
+  gap: 1rem;
+}
+
+.me-card {
+  grid-column: span 2 / span 2;
+}
+
+.about-me-card {
+  grid-column: span 2 / span 2;
+}
+
+.cv-card {
+  display: none;
+}
+
+.skills-card {
+  grid-column: span 2 / span 2;
+}
+
+.game-card {
+  grid-column: span 2 / span 2;
+}
+
+.bento-grid-experience {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  grid-template-rows: repeat(3, 1fr);
+  gap: 1rem;
+  /* max-height: 600px; */
+}
+
+.education-card {
+  grid-row: 1 / 3;
+  grid-column: 1 / 2;
+}
+
+.experience-card {
+  grid-column: span 2 / span 2;
+  grid-row: span 2 / span 2;
+}
+
+.freelance-card {
+  grid-column: 1 / 4;
+  grid-row: 3 / 4;
+}
+
+.text-vertical {
+  writing-mode: horizontal-tb;
+}
+
+.text-vertical-reverse {
+  writing-mode: sideways-rl;
+}
+
+@media (min-width: 600px) {
+  .bento-grid-main {
+    display: grid;
+    flex-direction: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .me-card {
+    grid-column: 1 / 2;
+  }
+
+  .about-me-card {
+    grid-column: 2 / 3;
+  }
+}
+
+@media (min-width: 900px) {
+  .me-card {
+    grid-column: 1 / 3;
+    grid-row: 1 / 2;
+  }
+
+  .about-me-card {
+    grid-column: 3 / 6;
+    grid-row: 1 / 2;
+  }
+
+  .game-card {
+    grid-column: 2 / 6;
+    grid-row: 2 / 3;
+  }
+
+  .cv-card {
+    grid-column: 5 / 6;
+    grid-row: 1 / 2;
+    display: none;
+  }
+
+  .skills-card {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+  }
+
+  .bento-grid-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 1rem;
+    /* height: 100%; */
+    max-height: 600px;
+  }
+  .text-vertical {
+    writing-mode: sideways-lr;
+  }
+}
+
+@media (max-width: 900px) {
+  .bento-grid-experience {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 100%;
+  }
+}
+
+@media (min-width: 1180px) {
+  .bento-grid-main {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 1rem;
+    /* height: 100%; */
+    max-height: 600px;
+  }
+
+  .me-card {
+    grid-column: 1 / 2;
+    grid-row: 1 / 3;
+  }
+
+  .about-me-card {
+    grid-column: 2 / 4;
+    grid-row: 1 / 2;
+  }
+
+  .skills-card {
+    grid-column: 4 / 6;
+    grid-row: 1 / 2;
+  }
+
+  .cv-card {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    display: flex;
+  }
+
+  .game-card {
+    grid-column: 3 / 6;
+    grid-row: 2 / 3;
+  }
+
+  .bento-grid-experience {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: repeat(3, 1fr);
+    gap: 1rem;
+    height: 100%;
+    max-height: 550px;
+  }
+
+  .education-card {
+    grid-row: span 3 / span 3;
+  }
+
+  .experience-card {
+    grid-column: span 2 / span 2;
+    grid-row: span 2 / span 2;
+  }
+
+  .freelance-card {
+    grid-column: span 2 / span 2;
+    grid-column-start: 2;
+    grid-row-start: 3;
+  }
+}
+
+.background-gradient-photo {
+  background: linear-gradient(
+    to bottom,
+    rgba(17, 17, 17, 0) 0%,
+    rgba(17, 17, 17, 1) 51%
+  );
+}
+
+.font-entry-title-animation {
+  animation: font-entry-title 2s ease-out forwards;
+  animation-delay: 1s;
+}
+
+.text-border {
+  -webkit-text-stroke: 1px var(--color-text-border);
+}
+
+.background-shape-external-link {
+  background-image: url("../assets/images/shape-external-link.svg");
+  background-size: 100%;
+  background-position: -3px -3px;
+  background-repeat: no-repeat;
+}
+
+@keyframes font-entry-title {
+  0% {
+    font-family: "Roboto Mono", monospace;
+  }
+  10% {
+    font-family: "Fira Code", monospace;
+  }
+  20% {
+    font-family: "IBM Plex Mono", monospace;
+  }
+  30% {
+    font-family: "Courier Prime", monospace;
+  }
+  40% {
+    font-family: "Poppins", monospace;
+  }
+  50% {
+    font-family: "Space Mono", monospace;
+  }
+  60% {
+    font-family: "Roboto Mono", monospace;
+  }
+  70% {
+    font-family: "IBM Plex Mono", monospace;
+  }
+  80% {
+    font-family: "Fira Code", monospace;
+  }
+  90% {
+    font-family: "IBM Plex Mono", monospace;
+  }
+  100% {
+    font-family: "Poppins", sans-serif;
+  }
+}
+
+.animation-phone-translate {
+  animation: phone-translate 4s linear forwards;
+}
+
+@keyframes phone-translate {
+  0% {
+    transform: translateX(-80vw) scale(0.5) rotate(90deg);
+  }
+  10% {
+    transform: translateX(0) scale(0.5) rotate(90deg);
+  }
+  18% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1.2);
+  }
+}
+
+.animation-translate-page {
+  animation: translate-page 1s both;
+  animation-delay: 1s;
+}
+
+@keyframes translate-page {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.8);
+  }
+  100% {
+    transform: scale(0.8);
+  }
+}
+
+h1,
+h2,
+h3,
+p,
+span,
+a {
+  animation: var(--animation-all-text);
+  animation-delay: 1.8s;
+}
+
+.neon-text-pink {
+  will-change: text-shadow;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 0 5px #ff00de, 0 0 15px #ff00de, 0 0 25px #ff00de;
+  animation: flicker 2s infinite alternate;
+}
+
+.neon-text-blue {
+  will-change: text-shadow;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 0 5px #00b3ff, 0 0 15px #00b3ff, 0 0 25px #00b3ff;
+  animation: flicker 2s infinite alternate;
+}
+
+@keyframes flicker {
+  0%,
+  18%,
+  22%,
+  25%,
+  53%,
+  57%,
+  100% {
+    opacity: 1;
+  }
+  20%,
+  24%,
+  55% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes blur-text {
+  0%,
+  40%,
+  80% {
+    /* filter: blur(8px); */
+    opacity: 0.5;
+    color: gray;
+  }
+  20%,
+  60% {
+    /* filter: blur(0); */
+    opacity: 1;
+    color: currentColor;
+    filter: blur(0);
+  }
+  80% {
+    filter: blur(8px);
+    opacity: 0.1;
+    color: currentColor;
+  }
+  100% {
+    filter: blur(8px);
+    opacity: 0.1;
+    color: currentColor;
+  }
+}
+
+.dark-mode-animation {
+  animation: dark-mode-animation 2s forwards;
+}
+
+@keyframes dark-mode-animation {
+  0% {
+    height: 1vh;
+    width: 5px;
+  }
+  20% {
+    width: 5px;
+    height: 200vh;
+  }
+  60% {
+    width: 5px;
+    height: 200vh;
+    transform: scaleX(1);
+  }
+  100% {
+    width: 5px;
+    height: 200vh;
+    transform: scaleX(500);
+  }
+}
+
+/* Estilos para el carrusel arrastrable de skills */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+.skills-scrollable {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  transition: transform 0.1s ease;
+}
+
+.skills-scrollable:active {
+  transform: scale(0.98);
+}
+
+.cursor-grab {
+  cursor: grab;
+}
+
+.cursor-grabbing {
+  cursor: grabbing;
+}
+
+.obstacle {
+  background-image: url("/images/enemy-sprite.svg");
+  background-size: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}

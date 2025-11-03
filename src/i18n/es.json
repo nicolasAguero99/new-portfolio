@@ -1,0 +1,34 @@
+{
+  "MAIN_TITLE": "Desarrollador Full Stack",
+  "ME_SECTION": {
+    "LABEL": "Desarrollador & diseñador web",
+    "GAME_SECTION": {
+      "START_BUTTON": "presiona {{key}} para saltar",
+      "EASTER_EGG": "¿Podrás llegar a los 10 puntos?",
+      "GAME_OVER": "¡Perdiste!",
+      "GAME_WIN": "¡Ganaste!"
+    },
+    "CV_SECTION": {
+      "TITLE": "Currículum",
+      "DESCRIPTION": "Mira y descarga mi currículum."
+    }
+  },
+  "ABOUT_ME_SECTION": {
+    "TITLE": "Sobre mí",
+    "DESCRIPTION": "Desarrollador Full-Stack con {{1 año}} de experiencia laboral formal y {{+5 años}} de trayectoria autodidacta/académica en soluciones propias."
+  },
+  "SKILLS_SECTION": {
+    "TITLE": "Habilidades"
+  },
+  "EXPERIENCE_SECTION": {
+    "TITLE": "Trayectoria & Formación",
+    "EDUCATION": "Educación",
+    "EXPERIENCE": "Experiencia"
+  },
+  "PROJECTS_SECTION": {
+    "TITLE": "Proyectos destacados"
+  },
+  "CONTACT_SECTION": {
+    "TITLE": "Contacto"
+  }
+}

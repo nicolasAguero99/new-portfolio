@@ -1,0 +1,99 @@
+---
+import Navbar from "./navbar.astro";
+import { getI18N } from "../i18n";
+import CardProject from "./bento-projects/card-project.astro";
+import { PROJECTS_ITEMS } from "../constants/constants";
+const i18n = getI18N(Astro.url.pathname);
+---
+
+<main
+  id='main-bento'
+  class='relative pt-8 min-[1180px]:pt-14 px-8 max-w-[1500px] mx-auto'
+>
+  <div class='flex flex-col gap-6 size-full'>
+    <Navbar />
+    <div class='flex flex-col gap-8 min-[900px]:gap-4 size-full'>
+      <h1
+        id='main-title'
+        class='min-[900px]:text-nowrap font-extrabold uppercase text-center text-border leading-tight transition-colors duration-1000 ease-out'
+        style='font-size: clamp(2.8rem, 5.8vw, 4.8rem);'
+      >
+        {i18n.PROJECTS_SECTION.TITLE}
+      </h1>
+      <section
+        class='max-w-[1300px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-16'
+      >
+        {
+          PROJECTS_ITEMS.map((project, index) => (
+            <CardProject key={index} project={project} index={index} />
+          ))
+        }
+      </section>
+    </div>
+  </div>
+</main>
+
+<style>
+  body {
+    overflow-x: hidden;
+  }
+</style>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const scrollContents = document.querySelectorAll(".custom-scroll");
+
+    scrollContents.forEach((slider) => {
+      slider.addEventListener(
+        "wheel",
+        (e) => {
+          if (Math.abs((e as WheelEvent).deltaX) > 0) {
+            e.preventDefault();
+            slider.scrollLeft += (e as WheelEvent).deltaX;
+          }
+        },
+        { passive: false }
+      );
+      let isDragging = false;
+      let startX = 0;
+      let scrollStart = 0;
+
+      const fadeLeft = slider.parentElement?.querySelector(".fade-left");
+      const fadeRight = slider.parentElement?.querySelector(".fade-right");
+
+      function updateFades() {
+        const maxScroll = slider.scrollWidth - slider.clientWidth;
+
+        // Inicio → ocultar izquierda
+        fadeLeft?.classList.toggle("fade-hidden", slider.scrollLeft <= 2);
+
+        // Final → ocultar derecha
+        fadeRight?.classList.toggle(
+          "fade-hidden",
+          slider.scrollLeft >= maxScroll - 2
+        );
+      }
+
+      slider.addEventListener("scroll", updateFades);
+      updateFades();
+
+      slider.addEventListener("mousedown", (e) => {
+        isDragging = true;
+        startX = (e as MouseEvent).clientX;
+        scrollStart = slider.scrollLeft;
+        (slider as HTMLElement).style.cursor = "grabbing";
+      });
+
+      document.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
+        const deltaX = e.clientX - startX;
+        slider.scrollLeft = scrollStart - deltaX;
+      });
+
+      document.addEventListener("mouseup", () => {
+        isDragging = false;
+        (slider as HTMLElement).style.cursor = "grab";
+      });
+    });
+  });
+</script>

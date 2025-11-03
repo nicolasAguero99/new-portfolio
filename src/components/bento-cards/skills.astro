@@ -1,0 +1,191 @@
+---
+import ArrowIcon from "../global/icons/arrow-icon.astro";
+import { getI18N } from "../../i18n";
+import ExternalLink from "../global/external-link.astro";
+import ShapeExternalLink from "../global/icons/shape-external-link.astro";
+const i18n = getI18N(Astro.url.pathname);
+---
+
+<div
+  id='skills-card'
+  class='skills-card relative flex flex-col gap-4 bg-primary text-white rounded-card p-6 size-full'
+>
+  <div
+    class='absolute -top-1 -right-1 size-14 flex items-center justify-center'
+  >
+    <div class='absolute top-[4px] right-[4px] size-18 -rotate-90'>
+      <ShapeExternalLink color='var(--color-external-link-background)' />
+    </div>
+    <ExternalLink href='/projects' color='var(--color-secondary)' />
+  </div>
+  <h2 class='text-3xl font-bold uppercase'>{i18n.SKILLS_SECTION.TITLE}</h2>
+  <div class='flex flex-wrap gap-2 h-full w-full'>
+    <canvas id='world'></canvas>
+  </div>
+</div>
+
+<script>
+  import { createWalls, skillsTagsGenerator } from "../../utils/utils";
+
+  document.addEventListener("astro:page-load", () => {
+    if (typeof window !== "undefined") {
+      // @ts-ignore
+      import("matter-js").then((Matter) => {
+        const {
+          Engine,
+          Render,
+          Runner,
+          World,
+          Bodies,
+          Events,
+          Mouse,
+          MouseConstraint,
+        } = Matter;
+
+        const engine = Engine.create();
+        const { world } = engine;
+
+        const canvas = document.getElementById("world") as HTMLCanvasElement;
+
+        // Función para inicializar dimensiones
+        if (!canvas) return;
+        const initCanvas = () => {
+          canvas.width = canvas.parentElement?.offsetWidth || 0;
+          canvas.height = canvas.parentElement?.offsetHeight || 0;
+        };
+
+        initCanvas();
+
+        const render = Render.create({
+          canvas,
+          engine,
+          options: {
+            width: canvas?.width || 0,
+            height: canvas?.height || 0,
+            background: "transparent",
+            wireframes: false,
+          },
+        });
+
+        // Crear paredes iniciales
+        const wallsArray = createWalls(
+          canvas.width,
+          canvas.height,
+          world,
+          Matter
+        );
+
+        Render.run(render);
+        const runner = Runner.create();
+        Runner.run(runner, engine);
+
+        const mouse = Mouse.create(render.canvas);
+        const mouseConstraint = MouseConstraint.create(engine, {
+          mouse,
+          constraint: {
+            stiffness: 0.2,
+            render: { visible: false },
+          },
+        });
+        World.add(world, mouseConstraint);
+        render.mouse = mouse;
+
+        const tags = [
+          "React",
+          "Next",
+          "Node",
+          "TypeScript",
+          "JavaScript",
+          "Python",
+          "SQL",
+          "NoSQL",
+          "MySQL",
+          "PHP",
+          "Astro",
+          "WordPress",
+          "Vue",
+          "HTML",
+          "CSS",
+          "AI",
+          "Angular",
+        ];
+
+        const tagBodies: any[] = [];
+
+        // Crear los tags
+        tags.forEach((tag) => {
+          const x = 50 + Math.random() * (canvas.width - 100);
+          const y = 50 + Math.random() * (canvas.height - 100);
+
+          const body = Bodies.rectangle(x, y, tag.length * 12, 28, {
+            chamfer: { radius: 14 },
+            render: {
+              fillStyle: "#444",
+              strokeStyle: "#666",
+              lineWidth: 2,
+            },
+          });
+
+          tagBodies.push(body);
+          World.add(world, body);
+        });
+
+        // Renderizar texto
+        Events.on(render, "afterRender", () => {
+          const ctx = render.context;
+          ctx.fillStyle = "white";
+          ctx.font = "12px Poppins";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          skillsTagsGenerator(tags, tagBodies, world, ctx);
+        });
+
+        // Resize mejorado
+        let resizeTimeout: NodeJS.Timeout;
+        window.addEventListener("resize", () => {
+          clearTimeout(resizeTimeout);
+          resizeTimeout = setTimeout(() => {
+            // Actualizar dimensiones del canvas
+            const newWidth = canvas?.parentElement?.offsetWidth || 0;
+            const newHeight = canvas?.parentElement?.offsetHeight || 0;
+
+            canvas.width = newWidth;
+            canvas.height = newHeight;
+
+            // Actualizar render (sin reiniciar el engine)
+            render.bounds.max.x = newWidth;
+            render.bounds.max.y = newHeight;
+            render.options.width = newWidth;
+            render.options.height = newHeight;
+            render.canvas.width = newWidth;
+            render.canvas.height = newHeight;
+
+            // Remover paredes antiguas
+            wallsArray.forEach((wall: any) => World.remove(world, wall));
+
+            // Crear nuevas paredes
+            const newWalls = createWalls(newWidth, newHeight, world, Matter);
+            wallsArray.length = 0;
+            wallsArray.push(...newWalls);
+
+            // Reposicionar bodies si están fuera de límites
+            tagBodies.forEach((body) => {
+              if (body.position.x > newWidth - 50) {
+                Matter.Body.setPosition(body, {
+                  x: newWidth - 50,
+                  y: body.position.y,
+                });
+              }
+              if (body.position.y > newHeight - 50) {
+                Matter.Body.setPosition(body, {
+                  x: body.position.x,
+                  y: newHeight - 50,
+                });
+              }
+            });
+          }, 10);
+        });
+      });
+    }
+  });
+</script>

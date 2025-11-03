@@ -1,0 +1,105 @@
+---
+import ChevronIcon from "../global/icons/chevron-icon.astro";
+import { getI18N } from "../../i18n";
+import { EDUCATION_ITEMS } from "../../constants/constants";
+const currentLanguage = Astro.url.pathname.startsWith("/en") ? "en" : "es";
+const i18n = getI18N(Astro.url.pathname);
+---
+
+<div
+  class='education-card relative flex flex-col gap-6 bg-primary text-white rounded-card p-6 max-[900px]:order-3'
+>
+  <div
+    class='w-[97%] min-[900px]:w-[94%] h-px bg-secondary absolute top-20 right-0'
+  >
+    <div
+      id='education-dot'
+      class='absolute top-0 bottom-0 my-auto size-3 bg-secondary rounded-full ring-2 ring-secondary ring-offset-3 ring-offset-primary transition-all duration-300 ease-out'
+      style='left: 0%;'
+    >
+    </div>
+  </div>
+  <div class='flex items-center justify-between gap-2'>
+    <h2 class='text-3xl font-bold uppercase'>
+      {i18n.EXPERIENCE_SECTION.EDUCATION}
+    </h2>
+    <div class='flex gap-2'>
+      <button
+        id='previous-education-button'
+        class='rotate-180 hover:scale-90 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 ease-out'
+      >
+        <ChevronIcon color='var(--color-secondary)' />
+      </button>
+      <button
+        id='next-education-button'
+        class='hover:scale-90 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 ease-out'
+      >
+        <ChevronIcon color='var(--color-secondary)' />
+      </button>
+    </div>
+  </div>
+  <div class='flex flex-col gap-2 mt-4'>
+    <div class='flex flex-col gap-2'>
+      <p id='education-school' class='text-sm text-tertiary'>
+        {EDUCATION_ITEMS[currentLanguage][0].school}
+      </p>
+      <h3 id='education-title' class='text-2xl font-medium'>
+        {EDUCATION_ITEMS[currentLanguage][0].title}
+      </h3>
+      <p id='education-date' class='text-sm text-tertiary'>
+        {EDUCATION_ITEMS[currentLanguage][0].date}
+      </p>
+      <p id='education-description' class='mt-2 max-[900px]:text-sm'>
+        {EDUCATION_ITEMS[currentLanguage][0].description}
+      </p>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ EDUCATION_ITEMS, currentLanguage }}>
+  const previousEducationButton = document.getElementById(
+    "previous-education-button"
+  );
+  const nextEducationButton = document.getElementById("next-education-button");
+  const educationSchool = document.getElementById("education-school");
+  const educationTitle = document.getElementById("education-title");
+  const educationDate = document.getElementById("education-date");
+  const educationDescription = document.getElementById("education-description");
+  const educationDot = document.getElementById("education-dot");
+  const maxWidthEducationDot = 91;
+
+  const educationItemsLength = EDUCATION_ITEMS[currentLanguage].length;
+  const educationDotLeft = maxWidthEducationDot / (educationItemsLength - 1);
+  let index = 0;
+
+  const disableButtons = () => {
+    previousEducationButton.disabled = index === 0;
+    nextEducationButton.disabled =
+      index === educationItemsLength - 1;
+  };
+  disableButtons();
+
+  previousEducationButton.addEventListener("click", () => {
+    index--;
+    if (index > 0) educationDot.style.left = `${index * educationDotLeft}%`;
+    else educationDot.style.left = `0%`;
+    updateEducation();
+  });
+
+  nextEducationButton.addEventListener("click", () => {
+    index++;
+    if (index < educationItemsLength) educationDot.style.left = `${index * educationDotLeft}%`;
+    else educationDot.style.left = `${maxWidthEducationDot}%`;
+    updateEducation();
+  });
+
+  function updateEducation() {
+    educationSchool.textContent =
+      EDUCATION_ITEMS[currentLanguage][index].school;
+    educationTitle.textContent = EDUCATION_ITEMS[currentLanguage][index].title;
+    educationDate.textContent = EDUCATION_ITEMS[currentLanguage][index].date;
+    educationDescription.textContent =
+      EDUCATION_ITEMS[currentLanguage][index].description;
+    disableButtons();
+  }
+</script>

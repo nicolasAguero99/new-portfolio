@@ -1,22 +1,171 @@
+---
+import { ClientRouter } from "astro:transitions";
+---
+
 <!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width' />
+    <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+    <meta name='generator' content={Astro.generator} />
+    <script
+      src='https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js'
+    ></script>
+    <title>Nicolás Agüero | Portfolio</title>
+    <meta name='description' content='Nicolás Agüero | Portfolio' />
+    <meta
+      name='keywords'
+      content='Nicolás Agüero, Portfolio, Developer, Web Developer, Full Stack Developer, Frontend Developer, Backend Developer, React Developer, Node Developer, Express Developer, MongoDB Developer, MySQL Developer, PostgreSQL Developer, HTML Developer, CSS Developer, JavaScript Developer, TypeScript Developer, React Developer, Node Developer, Express Developer, MongoDB Developer, MySQL Developer, PostgreSQL Developer, HTML Developer, CSS Developer, JavaScript Developer, TypeScript Developer'
+    />
+    <meta name='author' content='Nicolás Agüero' />
+    <meta name='robots' content='index, follow' />
+    <meta name='googlebot' content='index, follow' />
+    <meta name='bingbot' content='index, follow' />
+    <meta name='yandexbot' content='index, follow' />
+    <meta name='duckduckbot' content='index, follow' />
+    <ClientRouter />
+  </head>
+  <body>
+    <slot />
+    <div
+      id='dark-mode-animation'
+      class='hidden w-screen h-screen absolute top-0 left-0 -z-1'
+    >
+      <div
+        class='flex items-center w-fit rotate-[-30deg] absolute -top-40 left-[20vw]'
+        style='transform-origin: top center'
+      >
+        <div
+          id='line-dark-mode'
+          class='bg-change-theme-to-reverse dark-mode-animation'
+        >
+        </div>
+        <div class='bg-change-theme-to-reverse dark-mode-animation'></div>
+      </div>
+    </div>
+    <!-- <div id='cursor' class='absolute top-0 left-0 w-10 h-10 bg-red-500 z-50'></div>
+    <script>
+      const cursor = document.getElementById('cursor');
+      document.addEventListener('mousemove', (event) => {
+        cursor.style.left = event.clientX + 'px';
+        cursor.style.top = event.clientY + 'px';
+      });
+    </script> -->
+  </body>
 </html>
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const darkModeLS = localStorage.getItem("dark-mode") || "light";
+    if (darkModeLS === "dark") {
+      document.documentElement.style.setProperty(
+        "--color-dark-mode-animation",
+        "var(--color-background-dark)"
+      );
+      document.documentElement.style.setProperty(
+        "--color-change-theme-to",
+        "var(--color-background-dark)"
+      );
+      document.documentElement.style.setProperty(
+        "--color-logo-na",
+        "var(--color-secondary)"
+      );
+      document.getElementById("dark-mode-animation")?.classList.add("hidden");
+      document.getElementById("main-title")?.classList.add("text-secondary");
+      document.documentElement.style.setProperty(
+        "--color-external-link-background",
+        "var(--color-background-dark)"
+      );
+    } else {
+      document.documentElement.style.setProperty(
+        "--color-dark-mode-animation",
+        "var(--color-background)"
+      );
+      document.documentElement.style.setProperty(
+        "--color-change-theme-to",
+        "var(--color-background)"
+      );
+      document.documentElement.style.setProperty(
+        "--color-logo-na",
+        "var(--color-primary)"
+      );
+      document.getElementById("dark-mode-animation")?.classList.add("hidden");
+      document.getElementById("main-title")?.classList.remove("text-secondary");
+      document.documentElement.style.setProperty(
+        "--color-external-link-background",
+        "var(--color-background)"
+      );
+    }
+
+    window.addEventListener("change-theme", (event) => {
+      const newValue = (event as CustomEvent).detail.newValue;
+      if (newValue === "dark")
+        document.documentElement.style.setProperty(
+          "--color-dark-mode-animation",
+          "var(--color-background-dark)"
+        );
+      else
+        document.documentElement.style.setProperty(
+          "--color-dark-mode-animation",
+          "var(--color-background)"
+        );
+    });
+
+    document
+      .getElementById("line-dark-mode")
+      ?.addEventListener("animationend", () => {
+        (
+          document.getElementById("dark-mode-btn") as HTMLButtonElement
+        ).disabled = false;
+        const currentDarkModeLS = localStorage.getItem("dark-mode") || "light";
+        if (currentDarkModeLS === "dark") {
+          document.documentElement.style.setProperty(
+            "--color-change-theme-to",
+            "var(--color-background-dark)"
+          );
+          document.documentElement.style.setProperty(
+            "--color-dark-mode-animation",
+            "var(--color-background-dark)"
+          );
+          document.documentElement.style.setProperty(
+            "--color-logo-na",
+            "var(--color-secondary)"
+          );
+          document.documentElement.style.setProperty(
+            "--color-change-theme-to",
+            "var(--color-background-dark)"
+          );
+          document
+            .getElementById("dark-mode-animation")
+            ?.classList.add("hidden");
+          document
+            .getElementById("main-title")
+            ?.classList.toggle("text-secondary");
+        } else {
+          document.documentElement.style.setProperty(
+            "--color-change-theme-to",
+            "var(--color-background)"
+          );
+          document.documentElement.style.setProperty(
+            "--color-dark-mode-animation",
+            "var(--color-background)"
+          );
+          document.documentElement.style.setProperty(
+            "--color-logo-na",
+            "var(--color-primary)"
+          );
+          document.documentElement.style.setProperty(
+            "--color-change-theme-to",
+            "var(--color-background)"
+          );
+          document
+            .getElementById("dark-mode-animation")
+            ?.classList.add("hidden");
+          document
+            .getElementById("main-title")
+            ?.classList.toggle("text-secondary");
+        }
+      });
+  });
+</script>

@@ -1,0 +1,42 @@
+---
+import Navbar from "./navbar.astro";
+import { getI18N } from "../i18n";
+import Education from "./bento-experience/education.astro";
+import Experience from "./bento-experience/experience.astro";
+import Freelance from "./bento-experience/freelance.astro";
+const i18n = getI18N(Astro.url.pathname);
+---
+
+<main
+  id='main-bento'
+  class='relative pt-8 min-[1180px]:pt-14 px-8 min-[900px]:size-full max-w-[1500px] mx-auto'
+>
+  <div class='flex flex-col gap-6 size-full'>
+    <Navbar />
+    <div class='flex flex-col gap-8 min-[900px]:gap-4 size-full'>
+      <h1
+        id='main-title'
+        class='min-[900px]:text-nowrap font-extrabold uppercase text-center text-border leading-tight transition-colors duration-1000 ease-out'
+        style='font-size: clamp(2.8rem, 5.8vw, 4.8rem);'
+      >
+        {i18n.EXPERIENCE_SECTION.TITLE}
+      </h1>
+      <section class='bento-grid-experience max-[900px]:mb-10'>
+        <Education />
+        <Experience />
+        <Freelance />
+      </section>
+    </div>
+  </div>
+</main>
+
+<style>
+  body {
+    overflow-x: hidden;
+  }
+  @media (min-width: 900px) {
+    body {
+      overflow: hidden;
+    }
+  }
+</style>

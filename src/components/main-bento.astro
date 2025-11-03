@@ -1,0 +1,329 @@
+---
+import AboutMe from "./bento-cards/about-me.astro";
+import Cv from "./bento-cards/cv.astro";
+import Game from "./bento-cards/game.astro";
+import Me from "./bento-cards/me.astro";
+import Skills from "./bento-cards/skills.astro";
+import Navbar from "./navbar.astro";
+import { getI18N } from "../i18n";
+import RewindIcon from "./global/icons/rewind-icon.astro";
+const i18n = getI18N(Astro.url.pathname);
+---
+
+<span
+  id='presentation-subtitle'
+  class='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[5.8vw] text-nowrap font-extrabold uppercase text-center opacity-0'
+  >Hola, soy Nicolas Agüero</span
+>
+<span class='absolute -top-[20vh] neon-text-pink opacity-0'></span>
+<span class='absolute -top-[20vh] neon-text-blue opacity-0'></span>
+<main
+  id='main-bento'
+  class='relative pt-8 min-[1180px]:pt-12 px-8 max-w-[1500px] mx-auto max-[900px]:mb-10 min-[900px]:size-full'
+>
+  <div class='flex flex-col gap-6 size-full'>
+    <Navbar />
+    <div class='flex flex-col gap-8 min-[900px]:gap-4 size-full'>
+      <h1
+        id='main-title'
+        class='min-[900px]:text-nowrap font-extrabold uppercase text-center text-border leading-tight transition-colors duration-1000 ease-out'
+        style='font-size: clamp(2.8rem, 5.8vw, 4.8rem);'
+      >
+        {i18n.MAIN_TITLE}
+      </h1>
+      <section class='bento-grid-main'>
+        <Me />
+        <!-- <div class='bento-right-columns flex flex-col gap-4'> -->
+        <!-- <div class='flex gap-4 h-full'> -->
+        <!-- <div class='bento-right-column-topss flex gap-4'> -->
+        <AboutMe />
+        <Skills />
+        <!-- </div> -->
+        <!-- </div> -->
+        <!-- <div class='flex gap-4 h-full'> -->
+        <Cv />
+        <Game />
+        <!-- </div> -->
+        <!-- </div> -->
+      </section>
+    </div>
+  </div>
+  <button
+    id='skip-animations'
+    class='fixed bottom-4 right-4 bg-change-theme-to-reverse size-12 flex items-center justify-center rounded-full z-50 cursor-pointer hover:opacity-50 hover:scale-90 transition-all duration-500 ease-out opacity-0'
+  >
+    <RewindIcon color='var(--color-change-theme-to)' />
+  </button>
+</main>
+
+<style>
+  body {
+    overflow-x: hidden;
+  }
+  @media (min-width: 900px) {
+    body {
+      overflow: hidden;
+      height: 100dvh;
+    }
+  }
+</style>
+
+<script>
+  import { createTimeline, animate, stagger, splitText } from "animejs";
+
+  let isFirstLoad = true;
+
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  // const animationsEnabled = !prefersReducedMotion;
+  const animationsEnabled = false;
+
+  const getCenterPosition = (element: HTMLElement) => {
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+
+    const rect = element?.getBoundingClientRect() || {
+      left: 0,
+      top: 0,
+      width: 0,
+      height: 0,
+    };
+    const offsetX = centerX - (rect.left + rect.width / 2);
+    const offsetY = centerY - (rect.top + rect.height / 2);
+    return { offsetX, offsetY };
+  };
+
+  const elementsToShow = [
+    "presentation-subtitle",
+    "main-title",
+    "me-card",
+    "me-name",
+    "about-me-card",
+    "skills-card",
+    "cv-card",
+    "game-card",
+    "navbar",
+  ];
+
+  const skipAnimationsButton = document.getElementById("skip-animations");
+
+  if (!animationsEnabled || !isFirstLoad) {
+    document.getElementById("presentation-subtitle")?.classList.add("hidden");
+    skipAnimationsButton?.classList.add("hidden");
+
+    elementsToShow.forEach((id) => {
+      const element = document.getElementById(id);
+      if (element) {
+        element.classList.remove("opacity-0");
+        element.style.opacity = "1";
+      }
+    });
+  } else {
+    skipAnimationsButton?.classList.remove("opacity-0");
+    skipAnimationsButton?.classList.add("opacity-100");
+    elementsToShow.forEach((id) => {
+      const element = document.getElementById(id);
+      if (element) element.classList.add("opacity-0");
+    });
+    const meCardPosition = getCenterPosition(
+      document.getElementById("me-card") as HTMLElement
+    );
+    const mainTitlePosition = getCenterPosition(
+      document.getElementById("main-title") as HTMLElement
+    );
+
+    const timeline = createTimeline();
+    skipAnimationsButton?.addEventListener("click", () => {
+      timeline.speed = 4;
+      (document.querySelector("body") as HTMLElement).style =
+        "filter: grayscale(100%) blur(2px)";
+    });
+    timeline
+      .add(
+        "#me-card",
+        {
+          opacity: [0, 0],
+          translateX: [meCardPosition.offsetX],
+          // translateY: ["50vh"],
+          duration: 0,
+          easing: "easeOutExpo",
+        },
+        0
+      )
+      .add(
+        "#main-title",
+        {
+          opacity: [0, 0],
+          translateY: [mainTitlePosition.offsetY],
+        },
+        0
+      )
+      .add(
+        "#presentation-subtitle",
+        {
+          opacity: [0, 1],
+          // translateX: [offsetX],
+          // translateY: [200 + subtitlePosition.offsetY, subtitlePosition.offsetY],
+          duration: 500,
+          delay: 1000,
+          easing: "easeOutExpo",
+        },
+        0
+      )
+      .add(
+        "#presentation-subtitle",
+        {
+          scale: [1, 0.5],
+          translateY: [0, -700],
+          duration: 500,
+          delay: 1000,
+          // delay: 1000,
+          easing: "easeOutExpo",
+        },
+        "-=500"
+      )
+      .add(
+        "#main-title",
+        {
+          opacity: [0, 1],
+          translateY: [mainTitlePosition.offsetY, 0],
+          duration: 500,
+          // delay: 1500,
+        },
+        "-=450"
+      )
+      .add("#presentation-subtitle", {
+        translateY: [-700, -1400],
+        duration: 500,
+        delay: 500,
+        easing: "easeOutExpo",
+      })
+      // .add("#main-title", {
+      //   translateY: [mainTitlePosition.offsetY - 200, 0],
+      //   duration: 500,
+      //   // delay: 1500,
+      // })
+      .add(`#me-card`, {
+        opacity: [0, 1],
+        scale: [0.2, 1],
+        duration: 1000,
+        delay: 500,
+      })
+      .call(() => {
+        const { chars } = splitText("#me-name", {
+          chars: { wrap: "clip" },
+        });
+
+        animate(chars, {
+          y: ["100%", "-10%", "0%"],
+          duration: 750,
+          ease: "out(3)",
+          delay: stagger(50),
+          opacity: [0, 1],
+        });
+      })
+      .add(`#me-name`, {
+        opacity: [0, 1],
+        duration: 500,
+      })
+      .add(`#me-card`, {
+        translateX: [meCardPosition.offsetX, 0],
+        duration: 800,
+      })
+      .add(
+        [`#about-me-card`, `#cv-card`],
+        {
+          opacity: [0, 1],
+          translateX: ["-30vw", 0],
+          duration: 800,
+          delay: 500,
+        },
+        "-=800"
+      )
+      .add(
+        [`#skills-card`, `#game-card`],
+        {
+          opacity: [0, 1],
+          translateX: ["30vw", 0],
+          duration: 800,
+          delay: 500,
+        },
+        "-=850"
+      )
+      // .add(
+      //   "#main-title",
+      //   {
+      //     opacity: [0, 1],
+      //     translateY: [-200, 0],
+      //     duration: 1000,
+      //     delay: 1500,
+      //   },
+      //   "-=1500"
+      // )
+      .add(
+        "#navbar",
+        {
+          opacity: [0, 1],
+          duration: 500,
+          loop: 4,
+        },
+        "-=2000"
+      )
+      .call(() => {
+        document
+          .querySelector("#main-title")
+          ?.classList.add("font-entry-title-animation");
+        (document.querySelector("body") as HTMLElement).style =
+          "filter: grayscale(0%) blur(0px)";
+        skipAnimationsButton?.classList.add("hidden");
+      })
+      .add("#presentation-subtitle", {
+        display: ["block", "none"],
+      });
+    isFirstLoad = false;
+  }
+
+  // window.addEventListener("translate-page", (event) => {
+  //   const mainBento = document.getElementById("main-bento");
+  //   if (!mainBento) return;
+  //   mainBento.classList.add("animation-translate-page");
+
+  //   // change var css
+  //   document.documentElement.style.setProperty(
+  //     "--animation-all-text",
+  //     "blur-text 4s linear forwards"
+  //   );
+  //   document.querySelector("h1")?.addEventListener(
+  //     "animationend",
+  //     async () => {
+  //       const newPath =
+  //         (event as CustomEvent).detail.newValue === "en" ? "/en" : "/";
+  //       if (document.startViewTransition) {
+  //         document.startViewTransition(async () => {
+  //           document.documentElement.style.setProperty(
+  //             "--animation-all-text",
+  //             "blur-text 6s linear forwards"
+  //           );
+  //           await navigate(newPath);
+  //           mainBento.addEventListener("animationend", () => {
+  //             const computed = getComputedStyle(mainBento);
+  //             mainBento.style.opacity = computed.opacity;
+  //             mainBento.style.transform = computed.transform;
+  //             mainBento.style.animation = "none";
+  //           });
+  //         });
+  //       } else {
+  //         await navigate(newPath);
+  //       }
+
+  //       document.documentElement.style.setProperty(
+  //         "--animation-all-text",
+  //         "none"
+  //       );
+  //     },
+  //     { once: true }
+  //   );
+  // });
+</script>

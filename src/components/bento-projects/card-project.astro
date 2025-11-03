@@ -1,0 +1,125 @@
+---
+import type { Technologies } from "../../constants/constants";
+import GithubIcon from "../global/icons/github-icon.astro";
+import ExternalIcon from "../global/icons/external-icon.astro";
+
+const { project, index } = Astro.props;
+const currentLanguage = Astro.url.pathname.split("/")[1] == "/en" ? "en" : "es";
+---
+
+<div
+  class={`animate-blink w-full max-md:max-w-[500px] max-md:mx-auto card-project relative flex flex-col gap-4 bg-primary text-white rounded-xl p-2`}
+  style={`animation-delay: ${index <= 6 ? index * 0.1 : 0.6}s;`}
+>
+  <div
+    class='relative min-[900px]:hover:[&>#external-links-container]:opacity-100 min-[900px]:hover:[&>#external-links-container]:animate-vertical-bounce'
+  >
+    <a
+      class='cursor-pointer size-full'
+      href={project.projectLink || project.codeLink}
+      target='_blank'
+    >
+      <img
+        class='w-full h-[210px] min-h-[210px] object-cover rounded-lg'
+        loading='lazy'
+        src={project.imageSrc}
+        alt={project.title}
+      />
+    </a>
+    <span
+      class='absolute top-0 right-0 bg-primary text-secondary rounded-bl-lg px-4 py-1 ps-5 border border-t-0 border-r-0'
+      >{currentLanguage == "es" ? project.type : project.typeEnglish}</span
+    >
+    <div
+      id='external-links-container'
+      class='absolute bottom-0 right-2 pb-1 flex gap-2 text-sm min-[900px]:opacity-0 min-[900px]:transition-opacity duration-300 ease-out'
+    >
+      {
+        project.projectLink && (
+          <a
+            class='size-[35px] flex items-center justify-center bg-primary text-secondary rounded-full border hover:scale-90 transition-transform duration-300 ease-out'
+            href={project.projectLink}
+            target='_blank'
+          >
+            <ExternalIcon />
+          </a>
+        )
+      }
+      {
+        project.codeLink && (
+          <a
+            class='size-[35px] flex items-center justify-center bg-primary text-secondary rounded-full border hover:scale-90 transition-transform duration-300 ease-out'
+            href={project.codeLink}
+            target='_blank'
+          >
+            <GithubIcon />
+          </a>
+        )
+      }
+    </div>
+  </div>
+  <div class='flex flex-col justify-between h-full gap-6 p-2'>
+    <div class='flex flex-col gap-2'>
+      <h3 class='text-2xl font-medium'>{project.title}</h3>
+      <p class='text-sm text-tertiary'>
+        {
+          currentLanguage == "es"
+            ? project.description
+            : project.descriptionEnlgish
+        }
+      </p>
+    </div>
+    <div class='overflow-x-auto overflow-y-hidden scrollbar-hide relative'>
+      <div class='fade fade-left'></div>
+      <div class='fade fade-right'></div>
+      <div
+        class='custom-scroll overflow-x-auto overflow-y-hidden scrollbar-hide relative cursor-grab'
+      >
+        <div class='flex gap-2 whitespace-nowrap'>
+          {
+            project.technologies.map((technology: Technologies) => (
+              <span class='text-sm text-secondary border border-secondary px-3 rounded-full shrink-0 select-none'>
+                {technology}
+              </span>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .fade {
+    position: absolute;
+    top: 0;
+    width: 40px;
+    height: 100%;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    opacity: 1;
+    z-index: 10;
+  }
+
+  .fade-left {
+    left: 0;
+    background: linear-gradient(
+      to right,
+      color-mix(in srgb, var(--color-primary) 100%, transparent),
+      transparent
+    );
+  }
+
+  .fade-right {
+    right: 0;
+    background: linear-gradient(
+      to left,
+      color-mix(in srgb, var(--color-primary) 100%, transparent),
+      transparent
+    );
+  }
+
+  .fade-hidden {
+    opacity: 0;
+  }
+</style>

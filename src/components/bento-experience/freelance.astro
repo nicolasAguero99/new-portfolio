@@ -1,0 +1,101 @@
+---
+import { FREELANCE_ITEMS } from "../../constants/constants";
+const currentLanguage = Astro.url.pathname.startsWith("/en") ? "en" : "es";
+---
+
+<div
+  class='freelance-card relative flex max-[900px]:flex-col gap-2 max-[900px]:order-2'
+>
+  {
+    FREELANCE_ITEMS[currentLanguage].map((item, index) => (
+      <div
+        class={`card-freelance relative flex max-[900px]:flex-col min-[900px]:items-center gap-2 py-4 ps-3 pe-4 overflow-y-hidden min-[900px]:overflow-x-hidden max-[900px]:cursor-pointer bg-primary text-white rounded-xl ${index === 0 ? "active" : ""}`}
+      >
+        <span class='text-secondary font-bold text-4xl min-[900px]:text-lg uppercase opacity-50 size-fit text-vertical max-[900px]:mb-2'>
+          <span class='absolute top-0 bottom-0 left-0 my-auto text-secondary font-bold text-7xl min-[900px]:hidden'>
+            {index + 1}
+          </span>
+          <span class='max-[900px]:ms-10'>{item.company}</span>
+        </span>
+        <div class='flex flex-col ms-3'>
+          <p class='text-sm text-tertiary whitespace-nowrap'>
+            {item.company} - Freelance
+          </p>
+          <h3 class='text-2xl font-medium whitespace-nowrap'>{item.title}</h3>
+          <p class='text-sm text-tertiary whitespace-nowrap'>{item.date}</p>
+          <p
+            class='font-light mt-2 min-[900px]:line-clamp-2 text-sm'
+            title={item.description}
+          >
+            {item.description}
+          </p>
+        </div>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .card-freelance {
+    /* height: 68px; */
+    max-height: 68px;
+    transition: max-height 0.5s ease-out;
+  }
+
+  .card-freelance.active {
+    max-height: 500px;
+  }
+
+  @media (min-width: 900px) {
+    .card-freelance {
+      width: 55px;
+      height: 100%;
+      max-height: 100%;
+      transition: width 0.5s ease-out;
+    }
+
+    .card-freelance.active {
+      width: 100%;
+    }
+
+    .freelance-card:not(:has(.card-freelance:hover))
+      .card-freelance:first-child {
+      width: 100%;
+    }
+
+    .card-freelance:hover {
+      width: 100%;
+    }
+
+    .freelance-card:has(.card-freelance:hover) .card-freelance:not(:hover) {
+      width: 55px;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const cards = document.querySelectorAll(".card-freelance");
+    if (window.innerWidth >= 900) {
+      cards.forEach((card) => {
+        card.addEventListener("mouseenter", () => {
+          cards.forEach((c) => c.classList.remove("active"));
+          card.classList.add("active");
+        });
+      });
+
+      const container = document.querySelector(".freelance-card");
+      container?.addEventListener("mouseleave", () => {
+        cards.forEach((c) => c.classList.remove("active"));
+        cards[0]?.classList.add("active");
+      });
+    } else {
+      cards.forEach((card) => {
+        card.addEventListener("click", () => {
+          cards.forEach((c) => c.classList.remove("active"));
+          card.classList.add("active");
+        });
+      });
+    }
+  });
+</script>
