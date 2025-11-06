@@ -5,7 +5,7 @@ import confetti from "canvas-confetti";
 document.addEventListener("astro:page-load", () => gameInit());
 
 const gameInit = () => {
-  const GAME_WIN_SCORE = 2;
+  const GAME_WIN_SCORE = 10;
   const DURATIONS = ["duration-[1s]", "duration-[1.5s]"];
   const DELAY_MIN = 1500;
   const DELAY_MAX = 3000;
@@ -30,6 +30,7 @@ const gameInit = () => {
   const gameWinScreenRef = document.querySelector(
     "#gameWinScreen"
   ) as HTMLElement;
+  const scoreTextRef = document.querySelector("#scoreText") as HTMLElement;
   const playerRef = document.querySelector("#player") as HTMLElement;
   const scoreRef = document.querySelector("#score") as HTMLElement;
 
@@ -184,6 +185,7 @@ const gameInit = () => {
   }
 
   const startGame = () => {
+    scoreTextRef.classList.remove("opacity-0");
     score = 0;
     scoreRef.textContent = `0`;
     gameRunning = true;

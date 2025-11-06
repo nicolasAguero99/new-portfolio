@@ -6,22 +6,51 @@ import MoonIcon from "./global/icons/moon-icon.astro";
 const currentUrl = Astro.url.pathname;
 const lang = currentUrl.startsWith("/en") ? "en" : "es";
 import { pathWithLanguage } from "../i18n";
+import MenuIcon from "./global/icons/menu-icon.astro";
+import CloseIcon from "./global/icons/close-icon.astro";
+import ArrowIcon from "./global/icons/arrow-icon.astro";
 ---
 
 <header id='navbar' class={`flex justify-center items-center w-full`}>
   <nav class='flex gap-8 items-center justify-between w-full'>
-    <a href='/'>
+    <a href='/' class='z-50 relative'>
       <LogoNa color='var(--color-logo-na)' />
     </a>
+    <div
+      id='container-menu-entry'
+      class='hidden fixed top-0 left-0 w-full h-dvh bg-transparent min-[900px]:hidden z-40 pointer-events-none'
+    >
+      <div
+        id='menu-entry-animation'
+        class='absolute -top-1/2 left-0 h-1/2 bg-primary min-[900px]:hidden w-full z-50 transition-all duration-500 ease-out'
+      >
+      </div>
+      <div
+        id='menu-entry-animation-bottom'
+        class='absolute -bottom-1/2 left-0 h-1/2 bg-primary min-[900px]:hidden w-full z-50 transition-all duration-500 ease-out'
+      >
+      </div>
+    </div>
     <ul
-      class='max-[900px]:hidden flex gap-4 items-center bg-primary rounded-full p-2'
+      id='navbar-ul'
+      class='max-[900px]:animate-fade-in-left hidden max-[900px]:flex-col min-[900px]:gap-4 max-[900px]:absolute max-[900px]:top-0 max-[900px]:left-0 max-[900px]:size-full min-[900px]:bg-primary min-[900px]:rounded-full min-[900px]:p-2 min-[900px]:flex min-[900px]:items-center bg-transparent z-40 pt-[130px] max-[900px]:overflow-y-auto'
     >
       {
         NAV_LINKS.map((link) => (
           <li
-            class={`rounded-full py-0.5 px-3 ${link.href === Astro.url.pathname.replace("/en", "") ? "bg-secondary text-primary font-semibold" : "text-white"}`}
+            class={`max-[600px]:text-3xl max-[900px]:text-5xl min-[900px]:py-0 w-full`}
           >
-            <a href={pathWithLanguage(lang, link.href)}>{link.label}</a>
+            <a
+              href={pathWithLanguage(lang, link.href)}
+              class={`flex items-center justify-between gap-2 w-full min-[900px]:rounded-full max-[600px]:px-6 max-[900px]:px-12 px-4 py-8 min-[900px]:py-1 transition-colors duration-300 ease-out ${link.href === Astro.url.pathname.replace("/en", "") ? "text-secondary bg-secondary/30 min-[900px]:bg-secondary min-[900px]:text-primary font-semibold" : "text-white hover:bg-secondary/20"}`}
+            >
+              {lang === "en" ? link.labelEnglish : link.label}
+              <span class='min-[900px]:hidden'>
+                {link.href !== Astro.url.pathname.replace("/en", "") && (
+                  <ArrowIcon color='var(--color-secondary)' size='24' />
+                )}
+              </span>
+            </a>
           </li>
         ))
       }
@@ -42,62 +71,156 @@ import { pathWithLanguage } from "../i18n";
       >
         <GlobeIcon />
       </a>
+      <button
+        id='menu-btn'
+        class='min-[900px]:hidden size-14 cursor-pointer menu-reverse z-50'
+      >
+        <MenuIcon color='var(--color-logo-na)' />
+      </button>
+      <button
+        id='close-menu-btn'
+        disabled
+        class='hidden min-[900px]:hidden size-14 cursor-pointer menu-reverse z-50'
+      >
+        <CloseIcon color='var(--color-secondary)' />
+      </button>
     </div>
   </nav>
 </header>
 
 <script>
-  // const newLanguage = currentLanguage.includes("en") ? "es" : "en";
-  // const handleChangeLanguage = () => {
-  //   document.documentElement.lang = newLanguage;
-  //   window.dispatchEvent(
-  //     new CustomEvent("translate-page", {
-  //       detail: { newValue: newLanguage, executeTranslateAnimation: true },
-  //     })
-  //   );
-  // };
+  document.addEventListener("astro:page-load", () => {
+    const menuBtn = document.getElementById("menu-btn") as HTMLButtonElement;
+    const closeMenuBtn = document.getElementById(
+      "close-menu-btn"
+    ) as HTMLButtonElement;
+    const navbarUl = document.getElementById("navbar-ul") as HTMLUListElement;
+    const containerMenuEntry = document.getElementById(
+      "container-menu-entry"
+    ) as HTMLDivElement;
+    const menuEntryAnimation = document.getElementById(
+      "menu-entry-animation"
+    ) as HTMLDivElement;
+    const menuEntryAnimationBottom = document.getElementById(
+      "menu-entry-animation-bottom"
+    ) as HTMLDivElement;
+    const body = document.body as HTMLElement;
 
-  // document
-  //   .getElementById("language-btn")
-  //   ?.addEventListener("click", handleChangeLanguage);
+    menuBtn.addEventListener("click", () => {
+      body.classList.add("body-height-navbar");
+      window.scrollTo(0, 0);
+      containerMenuEntry.classList.remove("hidden");
+      containerMenuEntry.classList.add(
+        "backdrop-blur-xs",
+        "backdrop-brightness-50"
+      );
+      // body.style.overflowY = "hidden";
+      menuBtn.disabled = true;
+      if (localStorage.getItem("dark-mode") !== "dark") {
+        document.documentElement.style.setProperty(
+          "--color-logo-na",
+          "var(--color-secondary)"
+        );
+      }
+      menuBtn.classList.add("hidden");
+      closeMenuBtn.classList.remove("hidden");
+      // containerMenuEntry.classList.remove("hidden");
+      menuEntryAnimation.classList.remove("-top-1/2");
+      menuEntryAnimationBottom.classList.remove("-bottom-1/2");
+      menuEntryAnimation.classList.add("top-0");
+      menuEntryAnimationBottom.classList.add("bottom-0");
+      menuEntryAnimation.addEventListener(
+        "transitionend",
+        () => {
+          // setTimeout(() => {
+          navbarUl.classList.remove("hidden");
+          closeMenuBtn.disabled = false;
+          // }, 1000);
+        },
+        { once: true }
+      );
+    });
 
-  const handleChangeTheme = () => {
-    (document.getElementById("dark-mode-btn") as HTMLButtonElement).disabled =
-      true;
-    document.getElementById("dark-mode-animation")?.classList.remove("hidden");
-    const darkModeLS = localStorage.getItem("dark-mode") || "light";
-    // const darkModeLS = 'light';
-    const newDarkMode = darkModeLS === "light" ? "dark" : "light";
-    const colorChangeThemeToReverse =
-      newDarkMode === "dark"
-        ? "var(--color-background-dark)"
-        : "var(--color-secondary)";
-    const colorTextBorder =
-      newDarkMode === "dark"
-        ? "var(--color-secondary)"
-        : "var(--color-change-theme-to)";
-    document.documentElement.style.setProperty(
-      "--color-change-theme-to-reverse",
-      colorChangeThemeToReverse
-    );
-    document.documentElement.style.setProperty(
-      "--color-text-border",
-      colorTextBorder
-    );
-    setTimeout(() => {
+    closeMenuBtn.addEventListener("click", () => {
+      body.classList.remove("body-height-navbar");
+      // body.style.overflowY = "auto";
+      navbarUl.classList.add("hidden");
+      if (localStorage.getItem("dark-mode") !== "dark") {
+        document.documentElement.style.setProperty(
+          "--color-logo-na",
+          "var(--color-primary)"
+        );
+      }
+      closeMenuBtn.classList.add("hidden");
+      menuBtn.classList.remove("hidden");
+
+      menuEntryAnimation.classList.remove("top-0");
+      menuEntryAnimationBottom.classList.remove("bottom-0");
+      menuEntryAnimation.classList.add("-top-1/2");
+      menuEntryAnimationBottom.classList.add("-bottom-1/2");
+      menuEntryAnimation.addEventListener(
+        "transitionend",
+        () => {
+          containerMenuEntry.classList.add("hidden");
+          containerMenuEntry.classList.remove(
+            "backdrop-blur-xs",
+            "backdrop-brightness-50"
+          );
+          menuEntryAnimation.classList.add("-top-1/2");
+          menuEntryAnimationBottom.classList.add("-bottom-1/2");
+          menuBtn.disabled = false;
+          closeMenuBtn.disabled = true;
+        },
+        { once: true }
+      );
+    });
+
+    const handleChangeTheme = () => {
+      (document.getElementById("dark-mode-btn") as HTMLButtonElement).disabled =
+        true;
+      document
+        .getElementById("dark-mode-animation")
+        ?.classList.remove("hidden");
+      const darkModeLS = localStorage.getItem("dark-mode") || "dark";
+      // const darkModeLS = 'light';
+      const newDarkMode = darkModeLS === "light" ? "dark" : "light";
+      const colorChangeThemeToReverse =
+        newDarkMode === "dark"
+          ? "var(--color-background-dark)"
+          : "var(--color-secondary)";
+      const colorTitle =
+        newDarkMode === "dark"
+          ? "var(--color-secondary)"
+          : "var(--color-primary)";
+      const colorTextBorder =
+        newDarkMode === "dark"
+          ? "var(--color-secondary)"
+          : "var(--color-change-theme-to)";
       document.documentElement.style.setProperty(
-        "--color-external-link-background",
+        "--color-change-theme-to-reverse",
         colorChangeThemeToReverse
       );
-    }, 1250);
+      document.documentElement.style.setProperty(
+        "--color-text-border",
+        colorTextBorder
+      );
+      setTimeout(() => {
+        document.documentElement.style.setProperty(
+          "--color-external-link-background",
+          colorChangeThemeToReverse
+        );
+        document.documentElement.style.setProperty(
+          "--color-title",
+          colorTitle
+        );
+      }, 1250);
 
-    window.dispatchEvent(
-      new CustomEvent("change-theme", { detail: { newValue: newDarkMode } })
-    );
-    localStorage.setItem("dark-mode", newDarkMode);
-  };
+      window.dispatchEvent(
+        new CustomEvent("change-theme", { detail: { newValue: newDarkMode } })
+      );
+      localStorage.setItem("dark-mode", newDarkMode);
+    };
 
-  document.addEventListener("astro:page-load", () => {
     document
       .getElementById("dark-mode-btn")
       ?.addEventListener("click", handleChangeTheme);

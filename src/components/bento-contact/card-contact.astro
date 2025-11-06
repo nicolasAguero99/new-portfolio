@@ -1,0 +1,29 @@
+---
+import ButtonLink from "../global/button-link.astro";
+import ContactsIcon from "../global/icons/contacts-icon.astro";
+
+const { title, description, icon, link } = Astro.props;
+---
+
+<div
+  class={`card-${icon} relative flex flex-col gap-4 justify-between bg-primary text-white rounded-card p-6 h-fit min-[900px]:size-full overflow-hidden`}
+>
+  <div class='flex flex-col gap-2 justify-between z-20'>
+    <h2 class='text-3xl font-bold uppercase'>{title}</h2>
+    <p
+      class={`max-[550px]:text-sm whitespace-break-spaces w-fit ${icon === "email" ? "max-[1100px]:text-sm max-[900px]:text-base" : ""}`}
+    >{description}</p>
+  </div>
+  <ButtonLink
+    href={link}
+    backgroundColor='bg-secondary'
+    color='var(--color-primary)'
+    size='16'
+    external
+  />
+  <div
+    class={`absolute top-0 bottom-0 right-0 z-10 max-[1100px]:translate-x-1/4 ${icon === "whatsapp" ? "max-[900px]:translate-x-1/4" : "max-[900px]:translate-x-0"}`}
+  >
+    <ContactsIcon icon={icon} />
+  </div>
+</div>

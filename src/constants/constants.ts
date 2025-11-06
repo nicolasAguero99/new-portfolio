@@ -1,18 +1,22 @@
 export const NAV_LINKS = [
   {
-    label: 'Home',
+    label: 'Inicio',
+    labelEnglish: 'Home',
     href: '/',
   },
   {
     label: 'Experiencia',
+    labelEnglish: 'Experience',
     href: '/experience',
   },
   {
     label: 'Proyectos',
+    labelEnglish: 'Projects',
     href: '/projects',
   },
   {
     label: 'Contacto',
+    labelEnglish: 'Contact',
     href: '/contact',
   },
 ]
@@ -356,4 +360,37 @@ export const PROJECTS_ITEMS: Project[] = [
     projectLink: 'https://nicolasaguero99.github.io/Havanna-project/',
     codeLink: 'https://github.com/nicolasAguero99/Havanna-project'
   }
+]
+
+export const CONTACT_ITEMS = [
+  {
+    title: 'LinkedIn',
+    description: 'nicolas-aguero99',
+    icon: 'linkedin',
+    link: 'https://www.linkedin.com/in/nicolas-aguero99'
+  },
+  {
+    title: 'GitHub',
+    description: 'nicolasAguero99',
+    icon: 'github',
+    link: 'https://github.com/nicolasAguero99'
+  },
+  {
+    title: 'WhatsApp',
+    description: '+54 9 11 4097-4316',
+    icon: 'whatsapp',
+    link: 'https://api.whatsapp.com/send?phone=5491140974316&text=Hola,%20vi%20tu%20portfolio%20y%20me%20gustar%C3%ADa%20contactarme%20vos!'
+  },
+  {
+    title: 'Email',
+    description: 'aguero.nicolas2003@gmail.com',
+    icon: 'email',
+    link: 'mailto:aguero.nicolas2003@gmail.com'
+  },
+  {
+    title: 'Figma',
+    description: 'nicolasAguero99',
+    icon: 'figma',
+    link: 'https://www.figma.com/@nicolasAguero99'
+  },
 ]

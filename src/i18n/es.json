@@ -10,12 +10,15 @@
     },
     "CV_SECTION": {
       "TITLE": "Currículum",
-      "DESCRIPTION": "Mira y descarga mi currículum."
+      "DESCRIPTION": "Mira y descarga mi currículum.",
+      "BUTTON_TEXT": "Ver CV"
     }
   },
   "ABOUT_ME_SECTION": {
     "TITLE": "Sobre mí",
-    "DESCRIPTION": "Desarrollador Full-Stack con {{1 año}} de experiencia laboral formal y {{+5 años}} de trayectoria autodidacta/académica en soluciones propias."
+    "EXP_YEARS": "1 año",
+    "EXP_YEARS_SELF_TAUGHT": "+5 años",
+    "DESCRIPTION": "Desarrollador Full-Stack con {{EXP_YEARS}} de experiencia laboral formal y {{EXP_YEARS_SELF_TAUGHT}} de trayectoria autodidacta/académica en soluciones propias."
   },
   "SKILLS_SECTION": {
     "TITLE": "Habilidades"
@@ -29,6 +32,6 @@
     "TITLE": "Proyectos destacados"
   },
   "CONTACT_SECTION": {
-    "TITLE": "Contacto"
+    "TITLE": "¡Trabajemos juntos!"
   }
 }

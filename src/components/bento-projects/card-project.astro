@@ -22,7 +22,7 @@ const currentLanguage = Astro.url.pathname.split("/")[1] == "/en" ? "en" : "es";
       <img
         class='w-full h-[210px] min-h-[210px] object-cover rounded-lg'
         loading='lazy'
-        src={project.imageSrc}
+        src={`${project.imageSrc}`}
         alt={project.title}
       />
     </a>

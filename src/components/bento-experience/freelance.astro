@@ -15,7 +15,7 @@ const currentLanguage = Astro.url.pathname.startsWith("/en") ? "en" : "es";
           <span class='absolute top-0 bottom-0 left-0 my-auto text-secondary font-bold text-7xl min-[900px]:hidden'>
             {index + 1}
           </span>
-          <span class='max-[900px]:ms-10'>{item.company}</span>
+          <span class='max-[900px]:ms-10 text-nowrap'>{item.company}</span>
         </span>
         <div class='flex flex-col ms-3'>
           <p class='text-sm text-tertiary whitespace-nowrap'>
@@ -37,9 +37,8 @@ const currentLanguage = Astro.url.pathname.startsWith("/en") ? "en" : "es";
 
 <style>
   .card-freelance {
-    /* height: 68px; */
     max-height: 68px;
-    transition: max-height 0.5s ease-out;
+    transition: max-height 1s ease-out;
   }
 
   .card-freelance.active {
@@ -74,7 +73,7 @@ const currentLanguage = Astro.url.pathname.startsWith("/en") ? "en" : "es";
 </style>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("astro:page-load", () => {
     const cards = document.querySelectorAll(".card-freelance");
     if (window.innerWidth >= 900) {
       cards.forEach((card) => {

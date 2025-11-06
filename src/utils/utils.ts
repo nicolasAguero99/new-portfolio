@@ -1,12 +1,11 @@
 export const changeThemeToDarkNeon = () => {
+  document.documentElement.classList.add("dark-mode");
   (document.getElementsByTagName('body')[0] as HTMLElement).style.transition = "background-color 0.5s ease";
 
   document.documentElement.style.setProperty(
     "--color-background",
     "#000000"
   );
-  document?.querySelector("h1")?.classList.remove("text-primary");
-  document?.querySelector("h1")?.classList.add("neon-text-blue");
   document.documentElement.style.setProperty('--color-logo-na', 'var(--color-secondary)');
   (document.getElementById('dark-mode-btn') as HTMLButtonElement).disabled = true;
 

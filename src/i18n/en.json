@@ -10,12 +10,15 @@
     },
     "CV_SECTION": {
       "TITLE": "CV",
-      "DESCRIPTION": "See and download my CV."
+      "DESCRIPTION": "See and download my CV.",
+      "BUTTON_TEXT": "See CV"
     }
   },
   "ABOUT_ME_SECTION": {
     "TITLE": "About me",
-    "DESCRIPTION": "Full-Stack Developer with {{1 year}} of formal labor experience and {{+5 years}} of self-taught/academic experience in own solutions."
+    "EXP_YEARS": "1 year",
+    "EXP_YEARS_SELF_TAUGHT": "+5 years",
+    "DESCRIPTION": "Full-Stack Developer with {{EXP_YEARS}} of formal labor experience and {{EXP_YEARS_SELF_TAUGHT}} of self-taught/academic experience in own solutions."
   },
   "SKILLS_SECTION": {
     "TITLE": "Skills"
@@ -29,6 +32,6 @@
     "TITLE": "Featured Projects"
   },
   "CONTACT_SECTION": {
-    "TITLE": "Contact"
+    "TITLE": "Let's work together!"
   }
 }

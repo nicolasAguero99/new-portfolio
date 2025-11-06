@@ -1,14 +1,14 @@
 ---
-import ArrowIcon from "../global/icons/arrow-icon.astro";
 import { getI18N } from "../../i18n";
-import ExternalLink from "../global/external-link.astro";
+import ButtonLink from "../global/button-link.astro";
+import ArrowIcon from "../global/icons/arrow-icon.astro";
 import ShapeExternalLink from "../global/icons/shape-external-link.astro";
 const i18n = getI18N(Astro.url.pathname);
 ---
 
 <div
   id='about-me-card'
-  class='about-me-card relative flex flex-col gap-4 bg-primary text-white max-[600px]:rounded-card min-[600px]:rounded-r-card min-[900px]:rounded-card p-6'
+  class='about-me-card relative flex flex-col justify-between gap-4 bg-primary text-white rounded-card p-6'
 >
   <div
     class='absolute -bottom-1 -right-1 size-14 flex items-center justify-center'
@@ -16,18 +16,40 @@ const i18n = getI18N(Astro.url.pathname);
     <div class='absolute top-[-20px] right-[4px] size-18'>
       <ShapeExternalLink color='var(--color-external-link-background)' />
     </div>
-    <ExternalLink href={`/experience`} color='var(--color-secondary)' />
+    <ButtonLink
+      href={`/experience`}
+      backgroundColor='bg-primary'
+      color='var(--color-secondary)'
+      size='24'
+      rotate='-45'
+    />
   </div>
-  <h2 class='text-3xl font-bold uppercase'>{i18n.ABOUT_ME_SECTION.TITLE}</h2>
-  <p id='description' class=''></p>
+  <div class='flex flex-col gap-4'>
+    <h2 class='text-3xl font-bold uppercase'>{i18n.ABOUT_ME_SECTION.TITLE}</h2>
+    <p id='description' class=''></p>
+  </div>
+  <button
+    class='max-[750px]:hidden min-[900px]:hidden size-fit px-4 py-1 text-secondary text-sm border border-secondary rounded-full flex items-center gap-2 ring-offset-0 ring-1 hover:ring-2 hover:ring-offset-4 ring-offset-primary hover:[&>span]:translate-x-1 transition-all duration-300 ease-out cursor-pointer'
+  >
+    {i18n.ME_SECTION.CV_SECTION.BUTTON_TEXT}
+    <span class='transition-transform duration-300 ease-out -rotate-45'>
+      <ArrowIcon color='var(--color-secondary)' size='12' />
+    </span>
+  </button>
 </div>
 
-<script define:vars={{ i18n }}>
+<script>
+  import { getI18N } from "../../i18n";
+
   document.addEventListener("astro:page-load", () => {
+    const i18n = getI18N(window.location.pathname);
     const description = i18n.ABOUT_ME_SECTION.DESCRIPTION.replace(
-      "{{1 año}}",
-      "<strong>1 año</strong>"
-    ).replace("{{+5 años}}", "<strong>+5 años</strong>");
+      "{{EXP_YEARS}}",
+      "<strong>" + i18n.ABOUT_ME_SECTION.EXP_YEARS + "</strong>"
+    ).replace(
+      "{{EXP_YEARS_SELF_TAUGHT}}",
+      "<strong>" + i18n.ABOUT_ME_SECTION.EXP_YEARS_SELF_TAUGHT + "</strong>"
+    );
 
     const descriptionElement = document.querySelector("#description");
     if (!descriptionElement) return;

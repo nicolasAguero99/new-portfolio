@@ -7,30 +7,45 @@ import Skills from "./bento-cards/skills.astro";
 import Navbar from "./navbar.astro";
 import { getI18N } from "../i18n";
 import RewindIcon from "./global/icons/rewind-icon.astro";
+import SplitText from "./global/react-bits/text-split";
 const i18n = getI18N(Astro.url.pathname);
 ---
 
 <span
   id='presentation-subtitle'
-  class='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[5.8vw] text-nowrap font-extrabold uppercase text-center opacity-0'
-  >Hola, soy Nicolas Agüero</span
+  class='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[5.8vw] text-nowrap font-medium uppercase text-center opacity-0 text-change-theme-to-reverse'
+  >Hola, soy Nicolás Agüero</span
 >
-<span class='absolute -top-[20vh] neon-text-pink opacity-0'></span>
-<span class='absolute -top-[20vh] neon-text-blue opacity-0'></span>
+<!-- <span class='absolute -top-[20vh] neon-text-pink opacity-0'></span> -->
+<!-- <span class='absolute -top-[20vh] neon-text-blue opacity-0'></span> -->
 <main
   id='main-bento'
-  class='relative pt-8 min-[1180px]:pt-12 px-8 max-w-[1500px] mx-auto max-[900px]:mb-10 min-[900px]:size-full'
+  class='relative pt-8 min-[1180px]:pt-14 px-4 min-[600px]:px-8 max-w-[1500px] mx-auto max-[900px]:mb-10 min-[900px]:size-full main-bento-initial-state'
 >
   <div class='flex flex-col gap-6 size-full'>
     <Navbar />
     <div class='flex flex-col gap-8 min-[900px]:gap-4 size-full'>
       <h1
         id='main-title'
-        class='min-[900px]:text-nowrap font-extrabold uppercase text-center text-border leading-tight transition-colors duration-1000 ease-out'
-        style='font-size: clamp(2.8rem, 5.8vw, 4.8rem);'
+        class='max-[900px]:hidden text-title min-[900px]:text-nowrap text-center text-border leading-tight transition-colors duration-1000 ease-out h1-title'
       >
         {i18n.MAIN_TITLE}
       </h1>
+      <SplitText
+        text={i18n.MAIN_TITLE}
+        className='min-[900px]:hidden text-title text-2xl font-semibold text-center text-border leading-tight transition-colors duration-1000 ease-out h1-title opacity-entry-title-animation'
+        delay={50}
+        duration={0.6}
+        ease='power3.out'
+        splitType='chars'
+        from={{ opacity: 0, y: 40 }}
+        to={{ opacity: 1, y: 0 }}
+        threshold={0.1}
+        rootMargin='-100px'
+        textAlign='center'
+        tag='h1'
+        client:idle
+      />
       <section class='bento-grid-main'>
         <Me />
         <!-- <div class='bento-right-columns flex flex-col gap-4'> -->
@@ -59,6 +74,7 @@ const i18n = getI18N(Astro.url.pathname);
 <style>
   body {
     overflow-x: hidden;
+    max-width: 100vw;
   }
   @media (min-width: 900px) {
     body {
@@ -77,8 +93,13 @@ const i18n = getI18N(Astro.url.pathname);
     "(prefers-reduced-motion: reduce)"
   ).matches;
 
-  // const animationsEnabled = !prefersReducedMotion;
-  const animationsEnabled = false;
+  let animationsEnabled = !prefersReducedMotion;
+  animationsEnabled = false;
+
+  if (window.innerWidth <= 900) animationsEnabled = false;
+  document
+    .getElementById("main-bento")
+    ?.classList.remove("main-bento-initial-state");
 
   const getCenterPosition = (element: HTMLElement) => {
     const centerX = window.innerWidth / 2;
@@ -140,6 +161,8 @@ const i18n = getI18N(Astro.url.pathname);
       (document.querySelector("body") as HTMLElement).style =
         "filter: grayscale(100%) blur(2px)";
     });
+    window.scrollTo(0, 0);
+    document.body.classList.add("body-height-navbar");
     timeline
       .add(
         "#me-card",
@@ -175,8 +198,8 @@ const i18n = getI18N(Astro.url.pathname);
       .add(
         "#presentation-subtitle",
         {
-          scale: [1, 0.5],
-          translateY: [0, -700],
+          scale: [1, 0.3],
+          translateY: [0, "-130vh"],
           duration: 500,
           delay: 1000,
           // delay: 1000,
@@ -195,7 +218,7 @@ const i18n = getI18N(Astro.url.pathname);
         "-=450"
       )
       .add("#presentation-subtitle", {
-        translateY: [-700, -1400],
+        translateY: ["-130vh", "-200vh"],
         duration: 500,
         delay: 500,
         easing: "easeOutExpo",
@@ -266,8 +289,7 @@ const i18n = getI18N(Astro.url.pathname);
         "#navbar",
         {
           opacity: [0, 1],
-          duration: 500,
-          loop: 4,
+          duration: 1000,
         },
         "-=2000"
       )
@@ -278,6 +300,7 @@ const i18n = getI18N(Astro.url.pathname);
         (document.querySelector("body") as HTMLElement).style =
           "filter: grayscale(0%) blur(0px)";
         skipAnimationsButton?.classList.add("hidden");
+        document.body.classList.remove("body-height-navbar");
       })
       .add("#presentation-subtitle", {
         display: ["block", "none"],

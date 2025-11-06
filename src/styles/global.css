@@ -8,6 +8,7 @@
   --color-tertiary: #bababa;
   --color-background: #f4f4f4;
   --color-background-dark: #111111;
+  --color-title: var(--color-primary);
   --radius-card: 24px;
   --animation-all-text: none;
   --color-dark-mode-animation: var(--color-background-dark);
@@ -18,13 +19,72 @@
   --color-external-link-background: var(--color-background);
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
+html::-webkit-scrollbar {
+  width: 10px;
+}
+html::-webkit-scrollbar-track {
+  background: transparent;
+}
+html::-webkit-scrollbar-thumb {
+  background: var(--color-change-theme-to);
+  border: 1px solid var(--color-title);
+  border-radius: 100px;
+}
+html::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--color-title) 80%, transparent 20%);
+}
+
 body {
   font-family: "Poppins", sans-serif;
   background-color: var(--color-change-theme-to);
 }
 
+.dark-mode {
+  --color-title: var(--color-secondary);
+  --color-change-theme-to: var(--color-background-dark);
+  --color-change-theme-to-reverse: var(--color-secondary);
+  --color-dark-mode-animation: var(--color-background-dark);
+  --color-logo-na: var(--color-secondary);
+  --color-external-link-background: var(--color-background-dark);
+}
+
+.main-bento-initial-state {
+  opacity: 0;
+}
+
+.body-height-navbar {
+  height: 100vh;
+  overflow-y: hidden;
+}
+
 h2 {
   transition: color 0.5s ease;
+}
+
+.h1-title {
+  font-size: clamp(2rem, 5.8vw, 4.8rem);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.opacity-entry-title-animation {
+  animation: opacity-entry-title-animation 1.2s forwards;
+}
+
+@keyframes opacity-entry-title-animation {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .bento-grid {
@@ -46,7 +106,7 @@ h2 {
 
 .bento-right-column {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   gap: 1rem;
   /* height: 100%; */
@@ -107,6 +167,38 @@ h2 {
   grid-row: 3 / 4;
 }
 
+.bento-grid-contact {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 1rem;
+  height: 100%;
+}
+
+.card-linkedin {
+  grid-column: span 3 / span 3;
+}
+
+.card-github {
+  grid-column: span 3 / span 3;
+  grid-column-start: 4;
+}
+
+.card-email {
+  grid-column: span 6 / span 6;
+  grid-row: 2 / 3;
+}
+
+.card-whatsapp {
+  grid-column: span 6 / span 6;
+  grid-row: 3 / 4;
+}
+
+.card-figma {
+  grid-column: span 6 / span 6;
+  grid-row: 4 / 5;
+}
+
 .text-vertical {
   writing-mode: horizontal-tb;
 }
@@ -128,6 +220,42 @@ h2 {
 
   .about-me-card {
     grid-column: 2 / 3;
+  }
+}
+
+@media (max-width: 600px) {
+  .bento-grid-contact {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 750px) {
+  .bento-grid-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .me-card {
+    grid-column: 1 / 3;
+    grid-row: 1 / 2;
+  }
+
+  .about-me-card {
+    grid-column: 1 / 3;
+    grid-row: 2 / 3;
+  }
+
+  .skills-card {
+    grid-column: 1 / 3;
+    grid-row: 3 / 4;
+  }
+
+  .game-card {
+    grid-column: 1 / 3;
+    grid-row: 4 / 5;
   }
 }
 
@@ -166,8 +294,42 @@ h2 {
     /* height: 100%; */
     max-height: 600px;
   }
+
   .text-vertical {
     writing-mode: sideways-lr;
+  }
+
+  .bento-grid-contact {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 1rem;
+    height: 100%;
+    max-height: 550px;
+  }
+
+  .card-linkedin {
+    grid-column: span 3 / span 3;
+  }
+
+  .card-github {
+    grid-column: span 3 / span 3;
+    grid-column: 4 / 7;
+  }
+
+  .card-email {
+    grid-column: span 2 / span 2;
+    grid-row: 2 / 3;
+  }
+
+  .card-whatsapp {
+    grid-column: span 2 / span 2;
+    grid-row: 2 / 3;
+  }
+
+  .card-figma {
+    grid-column: span 2 / span 2;
+    grid-row: 2 / 3;
   }
 }
 
@@ -221,7 +383,7 @@ h2 {
     grid-template-rows: repeat(3, 1fr);
     gap: 1rem;
     height: 100%;
-    max-height: 550px;
+    max-height: 600px;
   }
 
   .education-card {
@@ -419,16 +581,16 @@ a {
   }
   20% {
     width: 5px;
-    height: 200vh;
+    height: 1000vh;
   }
   60% {
     width: 5px;
-    height: 200vh;
+    height: 1000vh;
     transform: scaleX(1);
   }
   100% {
     width: 5px;
-    height: 200vh;
+    height: 1000vh;
     transform: scaleX(500);
   }
 }
@@ -468,4 +630,42 @@ a {
   background-size: 100%;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+.menu-reverse {
+  transform: scaleX(-1);
+}
+
+.menu-entry-animation {
+  animation: menu-entry-animation 1s forwards;
+}
+
+.menu-entry-animation-bottom {
+  animation: menu-entry-animation-bottom 0.5s forwards;
+}
+
+.menu-entry-animation-reverse {
+  animation: menu-entry-animation 0.5s reverse forwards;
+}
+
+.menu-entry-animation-bottom-reverse {
+  animation: menu-entry-animation-bottom 0.5s reverse forwards;
+}
+
+@keyframes menu-entry-animation {
+  0% {
+    top: -80vh;
+  }
+  100% {
+    top: 0;
+  }
+}
+
+@keyframes menu-entry-animation-bottom {
+  0% {
+    bottom: -80vh;
+  }
+  100% {
+    bottom: 0;
+  }
 }

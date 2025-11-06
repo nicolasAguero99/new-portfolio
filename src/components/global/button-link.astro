@@ -1,0 +1,19 @@
+---
+import ArrowIcon from "./icons/arrow-icon.astro";
+import ChevronIcon from "./icons/chevron-icon.astro";
+const color = Astro.props.color || "var(--color-secondary)";
+const backgroundColor = Astro.props.backgroundColor || "bg-secondary";
+const href = Astro.props.href || "#";
+``;
+const size = Astro.props.size || "16";
+const rotate = Astro.props.rotate || "-rotate-45";
+const external = Astro.props.external || false;
+---
+
+<a
+  href={href}
+  target={external ? "_blank" : "_self"}
+  class={`size-fit ${backgroundColor} rounded-full ${external ? "p-3" : "p-2"} ${rotate} cursor-pointer hover:opacity-50 hover:scale-90 transition-all duration-300 ease-out z-20`}
+>
+  {external ? <ArrowIcon color={color} size={size} /> : <ChevronIcon color={color} size={size} />}
+</a>

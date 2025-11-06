@@ -1,7 +1,7 @@
 ---
 import ArrowIcon from "../global/icons/arrow-icon.astro";
 import { getI18N } from "../../i18n";
-import ExternalLink from "../global/external-link.astro";
+import ButtonLink from "../global/button-link.astro";
 import ShapeExternalLink from "../global/icons/shape-external-link.astro";
 const i18n = getI18N(Astro.url.pathname);
 ---
@@ -16,7 +16,13 @@ const i18n = getI18N(Astro.url.pathname);
     <div class='absolute top-[4px] right-[4px] size-18 -rotate-90'>
       <ShapeExternalLink color='var(--color-external-link-background)' />
     </div>
-    <ExternalLink href='/projects' color='var(--color-secondary)' />
+    <ButtonLink
+      href='/projects'
+      backgroundColor='bg-primary'
+      color='var(--color-secondary)'
+      size='24'
+      rotate='-45'
+    />
   </div>
   <h2 class='text-3xl font-bold uppercase'>{i18n.SKILLS_SECTION.TITLE}</h2>
   <div class='flex flex-wrap gap-2 h-full w-full'>
@@ -87,6 +93,20 @@ const i18n = getI18N(Astro.url.pathname);
             render: { visible: false },
           },
         });
+
+        mouseConstraint.mouse.element.removeEventListener(
+          "wheel",
+          mouseConstraint.mouse.mousewheel
+        );
+        mouseConstraint.mouse.element.removeEventListener(
+          "mousewheel",
+          mouseConstraint.mouse.mousewheel
+        );
+        mouseConstraint.mouse.element.removeEventListener(
+          "DOMMouseScroll",
+          mouseConstraint.mouse.mousewheel
+        );
+
         World.add(world, mouseConstraint);
         render.mouse = mouse;
 
@@ -141,50 +161,72 @@ const i18n = getI18N(Astro.url.pathname);
         });
 
         // Resize mejorado
+        // Resize mejorado
         let resizeTimeout: NodeJS.Timeout;
-        window.addEventListener("resize", () => {
+        const handleResize = () => {
           clearTimeout(resizeTimeout);
           resizeTimeout = setTimeout(() => {
-            // Actualizar dimensiones del canvas
-            const newWidth = canvas?.parentElement?.offsetWidth || 0;
-            const newHeight = canvas?.parentElement?.offsetHeight || 0;
+            // Esperar a que el DOM se actualice completamente
+            requestAnimationFrame(() => {
+              if (!canvas || !canvas.parentElement) return;
 
-            canvas.width = newWidth;
-            canvas.height = newHeight;
+              // Forzar recalculo del tamaño del contenedor
+              const parent = canvas.parentElement;
+              const computedStyle = window.getComputedStyle(parent);
+              const newWidth =
+                parent.clientWidth -
+                parseFloat(computedStyle.paddingLeft) -
+                parseFloat(computedStyle.paddingRight);
+              const newHeight =
+                parent.clientHeight -
+                parseFloat(computedStyle.paddingTop) -
+                parseFloat(computedStyle.paddingBottom);
 
-            // Actualizar render (sin reiniciar el engine)
-            render.bounds.max.x = newWidth;
-            render.bounds.max.y = newHeight;
-            render.options.width = newWidth;
-            render.options.height = newHeight;
-            render.canvas.width = newWidth;
-            render.canvas.height = newHeight;
+              // Validar que las dimensiones sean válidas
+              if (newWidth <= 0 || newHeight <= 0) return;
 
-            // Remover paredes antiguas
-            wallsArray.forEach((wall: any) => World.remove(world, wall));
+              // Resetear completamente el canvas
+              canvas.style.width = "100%";
+              canvas.style.height = "100%";
+              canvas.width = newWidth;
+              canvas.height = newHeight;
 
-            // Crear nuevas paredes
-            const newWalls = createWalls(newWidth, newHeight, world, Matter);
-            wallsArray.length = 0;
-            wallsArray.push(...newWalls);
+              // Actualizar render
+              render.bounds.max.x = newWidth;
+              render.bounds.max.y = newHeight;
+              render.options.width = newWidth;
+              render.options.height = newHeight;
+              render.canvas.width = newWidth;
+              render.canvas.height = newHeight;
 
-            // Reposicionar bodies si están fuera de límites
-            tagBodies.forEach((body) => {
-              if (body.position.x > newWidth - 50) {
-                Matter.Body.setPosition(body, {
-                  x: newWidth - 50,
-                  y: body.position.y,
-                });
-              }
-              if (body.position.y > newHeight - 50) {
-                Matter.Body.setPosition(body, {
-                  x: body.position.x,
-                  y: newHeight - 50,
-                });
-              }
+              // Remover paredes antiguas
+              wallsArray.forEach((wall: any) => World.remove(world, wall));
+
+              // Crear nuevas paredes
+              const newWalls = createWalls(newWidth, newHeight, world, Matter);
+              wallsArray.length = 0;
+              wallsArray.push(...newWalls);
+
+              // Reposicionar bodies si están fuera de límites
+              tagBodies.forEach((body) => {
+                if (body.position.x > newWidth - 50) {
+                  Matter.Body.setPosition(body, {
+                    x: newWidth - 50,
+                    y: body.position.y,
+                  });
+                }
+                if (body.position.y > newHeight - 50) {
+                  Matter.Body.setPosition(body, {
+                    x: body.position.x,
+                    y: newHeight - 50,
+                  });
+                }
+              });
             });
-          }, 10);
-        });
+          }, 150);
+        };
+
+        window.addEventListener("resize", handleResize);
       });
     }
   });
