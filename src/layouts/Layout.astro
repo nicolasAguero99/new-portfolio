@@ -3,10 +3,10 @@ import { ClientRouter } from "astro:transitions";
 ---
 
 <!doctype html>
-<html lang='en'>
+<html lang='es'>
   <head>
     <meta charset='UTF-8' />
-    <meta name='viewport' content='width=device-width' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
     <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
     <meta name='generator' content={Astro.generator} />
     <script
@@ -31,42 +31,88 @@ import { ClientRouter } from "astro:transitions";
       if (darkModeLS === "dark")
         document.documentElement.classList.add("dark-mode");
       else document.documentElement.classList.remove("dark-mode");
+
+      const darkModeIconDark = document.getElementById("dark-mode-icon-dark");
+      const darkModeIconLight = document.getElementById("dark-mode-icon-light");
+
+      if (darkModeLS === "dark") {
+        darkModeIconDark?.classList.add("hidden");
+        darkModeIconLight?.classList.remove("hidden");
+      } else {
+        darkModeIconDark?.classList.remove("hidden");
+        darkModeIconLight?.classList.add("hidden");
+      }
+
+      const isEnglishPage = window.location.pathname.startsWith("/en");
+      if (isEnglishPage) document.documentElement.lang = "en";
     </script>
+
+    <script
+      defer
+      src='https://cloud.umami.is/script.js'
+      data-website-id='79e469a5-96e6-4980-882b-f3d98f744be7'></script>
 
     <ClientRouter />
   </head>
-  <body>
-    <slot />
+  <slot />
+  <div
+    id='dark-mode-animation'
+    class='hidden w-screen h-screen fixed top-0 left-0 -z-1'
+  >
     <div
-      id='dark-mode-animation'
-      class='hidden w-screen h-screen fixed top-0 left-0 -z-1'
+      class='flex items-center w-fit rotate-[-30deg] absolute -top-80 left-[20vw]'
+      style='transform-origin: top center'
     >
       <div
-        class='flex items-center w-fit rotate-[-30deg] absolute -top-80 left-[20vw]'
-        style='transform-origin: top center'
+        id='line-dark-mode'
+        class='bg-change-theme-to-reverse dark-mode-animation'
       >
-        <div
-          id='line-dark-mode'
-          class='bg-change-theme-to-reverse dark-mode-animation'
-        >
-        </div>
-        <div class='bg-change-theme-to-reverse dark-mode-animation'></div>
       </div>
+      <div class='bg-change-theme-to-reverse dark-mode-animation'></div>
     </div>
-    <div
-      id='cursor'
-      class='absolute top-0 left-0 w-10 h-10 bg-red-500 z-50'
-      style='transform: translate(-50%, -50%); pointer-events: none;'
-    >
-    </div>
-    <script>
-      const cursor = document.getElementById("cursor");
-      document.addEventListener("mousemove", (event) => {
-        (cursor as HTMLElement).style.left = event.clientX + "px";
-        (cursor as HTMLElement).style.top = event.clientY + "px";
+  </div>
+  <div
+    id='cursor'
+    class='max-[900px]:hidden fixed size-3 bg-secondary rounded-full z-50 transition-shadow duration-500 ease-out border shadow-lg'
+    style='transform: translate(-50%, -50%); pointer-events: none;'
+  >
+  </div>
+  <div
+    id='cursor-hover'
+    class='max-[900px]:hidden fixed size-0 bg-transparent rounded-full z-50 transition-[width,height] duration-500 ease-out border-2 border-secondary'
+    style='transform: translate(-50%, -50%); pointer-events: none;'
+  >
+  </div>
+  <script>
+    document.addEventListener("astro:page-load", () => {
+      document.addEventListener("mouseover", (event) => {
+        event.preventDefault();
+        const target = event.target as HTMLElement;
+
+
+        const cursorHover = document.getElementById("cursor-hover");
+        if (target.closest("a, button")) {
+          (cursorHover as HTMLElement).classList.remove("size-0");
+          (cursorHover as HTMLElement).classList.add("size-6");
+          (cursorHover as HTMLElement).classList.add("outline");
+        } else {
+          (cursorHover as HTMLElement).classList.add("size-0");
+          (cursorHover as HTMLElement).classList.remove("size-6");
+          (cursorHover as HTMLElement).classList.remove("outline");
+        }
       });
-    </script>
-  </body>
+      if (window.innerWidth > 900) {
+        const cursor = document.getElementById("cursor");
+        const cursorHover = document.getElementById("cursor-hover");
+        document.addEventListener("mousemove", (event) => {
+          (cursor as HTMLElement).style.left = event.clientX + "px";
+          (cursor as HTMLElement).style.top = event.clientY + "px";
+          (cursorHover as HTMLElement).style.left = event.clientX + "px";
+          (cursorHover as HTMLElement).style.top = event.clientY + "px";
+        });
+      }
+    });
+  </script>
 </html>
 
 <script>
@@ -76,77 +122,27 @@ import { ClientRouter } from "astro:transitions";
     if (darkModeLS === "dark") root.classList.add("dark-mode");
     else root.classList.remove("dark-mode");
 
-    // const darkModeLS = localStorage.getItem("dark-mode") || "dark";
-    // if (darkModeLS === "dark") {
-    //   document.documentElement.style.setProperty(
-    //     "--color-title",
-    //     "var(--color-secondary)"
-    //   );
-    //   document.documentElement.style.setProperty(
-    //     "--color-change-theme-to-reverse",
-    //     "var(--color-secondary)"
-    //   );
-    //   document.documentElement.style.setProperty(
-    //     "--color-dark-mode-animation",
-    //     "var(--color-background-dark)"
-    //   );
-    //   document.documentElement.style.setProperty(
-    //     "--color-change-theme-to",
-    //     "var(--color-background-dark)"
-    //   );
-    //   document.documentElement.style.setProperty(
-    //     "--color-logo-na",
-    //     "var(--color-secondary)"
-    //   );
-    //   document.getElementById("dark-mode-animation")?.classList.add("hidden");
-    //   document.getElementById("main-title")?.classList.add("text-secondary");
-    //   document.documentElement.style.setProperty(
-    //     "--color-external-link-background",
-    //     "var(--color-background-dark)"
-    //   );
-    // } else {
-    //   document.documentElement.style.setProperty(
-    //     "--color-text-title",
-    //     "var(--color-primary)"
-    //   );
-    //   document.documentElement.style.setProperty(
-    //     "--color-change-theme-to-reverse",
-    //     "var(--color-primary)"
-    //   );
-    //   document.documentElement.style.setProperty(
-    //     "--color-dark-mode-animation",
-    //     "var(--color-background)"
-    //   );
-    //   document.documentElement.style.setProperty(
-    //     "--color-change-theme-to",
-    //     "var(--color-background)"
-    //   );
-    //   document.documentElement.style.setProperty(
-    //     "--color-logo-na",
-    //     "var(--color-primary)"
-    //   );
-    //   document.getElementById("dark-mode-animation")?.classList.add("hidden");
-    //   document
-    //     .getElementById("main-title")
-    //     ?.classList.remove("text-secondary");
-    //   document.documentElement.style.setProperty(
-    //     "--color-external-link-background",
-    //     "var(--color-background)"
-    //   );
-    // }
-
     window.addEventListener("change-theme", (event) => {
+      const darkModeIconDark = document.getElementById("dark-mode-icon-dark");
+      const darkModeIconLight = document.getElementById("dark-mode-icon-light");
       const newValue = (event as CustomEvent).detail.newValue;
-      if (newValue === "dark")
+      if (newValue === "dark") {
         document.documentElement.style.setProperty(
           "--color-dark-mode-animation",
           "var(--color-background-dark)"
         );
-      else
+
+        darkModeIconDark?.classList.add("hidden");
+        darkModeIconLight?.classList.remove("hidden");
+      } else {
         document.documentElement.style.setProperty(
           "--color-dark-mode-animation",
           "var(--color-background)"
         );
+
+        darkModeIconDark?.classList.remove("hidden");
+        darkModeIconLight?.classList.add("hidden");
+      }
     });
 
     document

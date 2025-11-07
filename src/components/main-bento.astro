@@ -85,6 +85,10 @@ const i18n = getI18N(Astro.url.pathname);
 </style>
 
 <script>
+  document.addEventListener("astro:page-load", () => document.getElementById("main-bento")?.classList.remove("main-bento-initial-state"))
+</script>
+
+<script>
   import { createTimeline, animate, stagger, splitText } from "animejs";
 
   let isFirstLoad = true;
@@ -94,12 +98,9 @@ const i18n = getI18N(Astro.url.pathname);
   ).matches;
 
   let animationsEnabled = !prefersReducedMotion;
-  animationsEnabled = false;
+  // animationsEnabled = false;
 
   if (window.innerWidth <= 900) animationsEnabled = false;
-  document
-    .getElementById("main-bento")
-    ?.classList.remove("main-bento-initial-state");
 
   const getCenterPosition = (element: HTMLElement) => {
     const centerX = window.innerWidth / 2;
@@ -187,8 +188,6 @@ const i18n = getI18N(Astro.url.pathname);
         "#presentation-subtitle",
         {
           opacity: [0, 1],
-          // translateX: [offsetX],
-          // translateY: [200 + subtitlePosition.offsetY, subtitlePosition.offsetY],
           duration: 500,
           delay: 1000,
           easing: "easeOutExpo",
@@ -202,7 +201,6 @@ const i18n = getI18N(Astro.url.pathname);
           translateY: [0, "-130vh"],
           duration: 500,
           delay: 1000,
-          // delay: 1000,
           easing: "easeOutExpo",
         },
         "-=500"
@@ -213,7 +211,6 @@ const i18n = getI18N(Astro.url.pathname);
           opacity: [0, 1],
           translateY: [mainTitlePosition.offsetY, 0],
           duration: 500,
-          // delay: 1500,
         },
         "-=450"
       )
@@ -223,11 +220,6 @@ const i18n = getI18N(Astro.url.pathname);
         delay: 500,
         easing: "easeOutExpo",
       })
-      // .add("#main-title", {
-      //   translateY: [mainTitlePosition.offsetY - 200, 0],
-      //   duration: 500,
-      //   // delay: 1500,
-      // })
       .add(`#me-card`, {
         opacity: [0, 1],
         scale: [0.2, 1],
@@ -275,16 +267,6 @@ const i18n = getI18N(Astro.url.pathname);
         },
         "-=850"
       )
-      // .add(
-      //   "#main-title",
-      //   {
-      //     opacity: [0, 1],
-      //     translateY: [-200, 0],
-      //     duration: 1000,
-      //     delay: 1500,
-      //   },
-      //   "-=1500"
-      // )
       .add(
         "#navbar",
         {
@@ -307,46 +289,4 @@ const i18n = getI18N(Astro.url.pathname);
       });
     isFirstLoad = false;
   }
-
-  // window.addEventListener("translate-page", (event) => {
-  //   const mainBento = document.getElementById("main-bento");
-  //   if (!mainBento) return;
-  //   mainBento.classList.add("animation-translate-page");
-
-  //   // change var css
-  //   document.documentElement.style.setProperty(
-  //     "--animation-all-text",
-  //     "blur-text 4s linear forwards"
-  //   );
-  //   document.querySelector("h1")?.addEventListener(
-  //     "animationend",
-  //     async () => {
-  //       const newPath =
-  //         (event as CustomEvent).detail.newValue === "en" ? "/en" : "/";
-  //       if (document.startViewTransition) {
-  //         document.startViewTransition(async () => {
-  //           document.documentElement.style.setProperty(
-  //             "--animation-all-text",
-  //             "blur-text 6s linear forwards"
-  //           );
-  //           await navigate(newPath);
-  //           mainBento.addEventListener("animationend", () => {
-  //             const computed = getComputedStyle(mainBento);
-  //             mainBento.style.opacity = computed.opacity;
-  //             mainBento.style.transform = computed.transform;
-  //             mainBento.style.animation = "none";
-  //           });
-  //         });
-  //       } else {
-  //         await navigate(newPath);
-  //       }
-
-  //       document.documentElement.style.setProperty(
-  //         "--animation-all-text",
-  //         "none"
-  //       );
-  //     },
-  //     { once: true }
-  //   );
-  // });
 </script>

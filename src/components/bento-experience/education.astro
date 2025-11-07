@@ -57,49 +57,52 @@ const i18n = getI18N(Astro.url.pathname);
 </div>
 
 <script define:vars={{ EDUCATION_ITEMS, currentLanguage }}>
-  const previousEducationButton = document.getElementById(
-    "previous-education-button"
-  );
-  const nextEducationButton = document.getElementById("next-education-button");
-  const educationSchool = document.getElementById("education-school");
-  const educationTitle = document.getElementById("education-title");
-  const educationDate = document.getElementById("education-date");
-  const educationDescription = document.getElementById("education-description");
-  const educationDot = document.getElementById("education-dot");
-  const maxWidthEducationDot = 91;
+  document.addEventListener("astro:page-load", () => {
+    const previousEducationButton = document.getElementById(
+      "previous-education-button"
+    );
+    if (!previousEducationButton) return;
+    const nextEducationButton = document.getElementById("next-education-button");
+    const educationSchool = document.getElementById("education-school");
+    const educationTitle = document.getElementById("education-title");
+    const educationDate = document.getElementById("education-date");
+    const educationDescription = document.getElementById("education-description");
+    const educationDot = document.getElementById("education-dot");
+    const maxWidthEducationDot = 91;
 
-  const educationItemsLength = EDUCATION_ITEMS[currentLanguage].length;
-  const educationDotLeft = maxWidthEducationDot / (educationItemsLength - 1);
-  let index = 0;
+    const educationItemsLength = EDUCATION_ITEMS[currentLanguage].length;
+    const educationDotLeft = maxWidthEducationDot / (educationItemsLength - 1);
+    let index = 0;
 
-  const disableButtons = () => {
-    previousEducationButton.disabled = index === 0;
-    nextEducationButton.disabled =
-      index === educationItemsLength - 1;
-  };
-  disableButtons();
-
-  previousEducationButton.addEventListener("click", () => {
-    index--;
-    if (index > 0) educationDot.style.left = `${index * educationDotLeft}%`;
-    else educationDot.style.left = `0%`;
-    updateEducation();
-  });
-
-  nextEducationButton.addEventListener("click", () => {
-    index++;
-    if (index < educationItemsLength) educationDot.style.left = `${index * educationDotLeft}%`;
-    else educationDot.style.left = `${maxWidthEducationDot}%`;
-    updateEducation();
-  });
-
-  function updateEducation() {
-    educationSchool.textContent =
-      EDUCATION_ITEMS[currentLanguage][index].school;
-    educationTitle.textContent = EDUCATION_ITEMS[currentLanguage][index].title;
-    educationDate.textContent = EDUCATION_ITEMS[currentLanguage][index].date;
-    educationDescription.textContent =
-      EDUCATION_ITEMS[currentLanguage][index].description;
+    const disableButtons = () => {
+      previousEducationButton.disabled = index === 0;
+      nextEducationButton.disabled =
+        index === educationItemsLength - 1;
+    };
     disableButtons();
+
+    previousEducationButton.addEventListener("click", () => {
+      index--;
+      if (index > 0) educationDot.style.left = `${index * educationDotLeft}%`;
+      else educationDot.style.left = `0%`;
+      updateEducation();
+    });
+
+    nextEducationButton.addEventListener("click", () => {
+      index++;
+      if (index < educationItemsLength) educationDot.style.left = `${index * educationDotLeft}%`;
+      else educationDot.style.left = `${maxWidthEducationDot}%`;
+      updateEducation();
+    });
+
+    function updateEducation() {
+      educationSchool.textContent =
+        EDUCATION_ITEMS[currentLanguage][index].school;
+      educationTitle.textContent = EDUCATION_ITEMS[currentLanguage][index].title;
+      educationDate.textContent = EDUCATION_ITEMS[currentLanguage][index].date;
+      educationDescription.textContent =
+        EDUCATION_ITEMS[currentLanguage][index].description;
+      disableButtons();
   }
+  });
 </script>

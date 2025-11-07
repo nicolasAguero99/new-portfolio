@@ -2,22 +2,12 @@
 import ContactBento from "../components/contact-bento.astro";
 import Layout from "../layouts/Layout.astro";
 import "../styles/global.css";
-import Ribbons from "../components/global/react-bits/ribbons";
 ---
 
 <Layout>
   <div
     class='max-[900px]:hidden fixed top-0 left-0 w-dvw h-dvh z-50 pointer-events-none'
   >
-    <Ribbons
-      baseThickness={10}
-      colors={["#FFFFFF"]}
-      speedMultiplier={0.5}
-      maxAge={400}
-      enableFade={false}
-      enableShaderEffect={true}
-      client:idle
-    />
   </div>
   <ContactBento />
 </Layout>

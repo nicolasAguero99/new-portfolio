@@ -17,6 +17,11 @@
   --color-logo-na: var(--color-primary);
   --color-text-border: var(--color-background);
   --color-external-link-background: var(--color-background);
+  --icon-dark-mode: "dark";
+}
+
+* {
+  cursor: none;
 }
 
 html {
@@ -58,7 +63,7 @@ body {
 
 .body-height-navbar {
   height: 100vh;
-  overflow-y: hidden;
+  overflow: hidden;
 }
 
 h2 {
