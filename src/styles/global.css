@@ -92,37 +92,6 @@ h2 {
   }
 }
 
-.bento-grid {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  grid-template-rows: 1fr;
-  gap: 1rem;
-  height: 100%;
-  margin: 0 auto;
-  max-width: 1200px;
-}
-
-.bento-left-column {
-  display: grid;
-  grid-template-rows: 1fr;
-  gap: 1rem;
-  height: 100%;
-}
-
-.bento-right-column {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 1rem;
-  /* height: 100%; */
-}
-
-.bento-right-column-top {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
-
 .bento-grid-main {
   display: grid;
   flex-direction: 1fr;

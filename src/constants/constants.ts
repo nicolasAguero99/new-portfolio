@@ -159,7 +159,7 @@ interface Project {
   codeLink: string
 }
 
-export type Technologies = 'Next' | 'React' | 'TypeScript' | 'React native' | 'Node' | 'Mongo Db' | 'Axios' | 'Jwt' | 'Socket.io' | 'SCSS' | 'Tailwind' | 'Three.js' | 'HTML' | 'CSS' | 'Javascript' | 'PWA' | 'API' | 'Bootstrap' | 'PHP' | 'MySql' | 'Vue' | 'Firebase' | 'Prisma' | 'Zod' | 'Chart.Js' | 'MercadoPago' | 'Zustand' | 'React-hook-forms' | 'WhatsApp' | 'Rollup' | 'Npm' | 'VS Code Extension' | 'Figma Extension'
+export type Technologies = 'Next' | 'React' | 'TypeScript' | 'React native' | 'Node' | 'Mongo Db' | 'Axios' | 'Jwt' | 'Socket.io' | 'SCSS' | 'Tailwind' | 'Three.js' | 'HTML' | 'CSS' | 'Javascript' | 'PWA' | 'API' | 'Bootstrap' | 'PHP' | 'MySql' | 'Vue' | 'Firebase' | 'Prisma' | 'Zod' | 'Chart.Js' | 'MercadoPago' | 'Zustand' | 'React-hook-forms' | 'WhatsApp' | 'Rollup' | 'Npm' | 'VS Code Extension' | 'Figma Extension' | 'Astro'
 
 export const PROJECTS_ITEMS: Project[] = [
   {
@@ -216,6 +216,17 @@ export const PROJECTS_ITEMS: Project[] = [
     technologies: ['Next', 'TypeScript', 'Firebase', 'MercadoPago', 'Zustand', 'React-hook-forms', 'Zod', 'Tailwind'],
     projectLink: 'https://all-in-one-sooty.vercel.app/',
     codeLink: 'https://github.com/nicolasAguero99/all-in-one'
+  },
+  {
+    title: 'Previous portfolio',
+    imageSrc: '/images/previous-portfolio.jpg',
+    type: 'Proyecto',
+    typeEnglish: 'Project',
+    description: 'Proyecto personal. Es el portfolio anterior a este.',
+    descriptionEnlgish: 'Personal project. It is the previous portfolio to this one.',
+    technologies: ['Astro', 'TypeScript', 'Tailwind'],
+    projectLink: '',
+    codeLink: 'https://github.com/nicolasAguero99/nicolas-aguero-porfolio'
   },
   {
     title: 'Entreprise platform',

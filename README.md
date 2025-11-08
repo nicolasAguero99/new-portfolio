@@ -1,46 +1,37 @@
-# Astro Starter Kit: Basics
+# Hola, soy Nicolás Agüero 👋
 
-```sh
-npm create astro@latest -- --template basics
-```
+¡Bienvenido a mi perfil de GitHub! Mi nombre es Nicolás Agüero, soy de Buenos Aires (CABA), Argentina
+Soy un apasionado desarrollador y diseñador web Full-Stack, especializado en front-end.
+Me recibí en Técnico Superior en Diseño y Programación Web en la [Escuela Da Vinci](https://davinci.edu.ar/carreras/desarrollo-web-y-mobile)
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Sobre mí
 
-## 🚀 Project Structure
+- [Porfolio](https://nicolas-aguero-porfolio.vercel.app/)
+- [LinkedIn](https://github.com/nicolasAguero99)
+- [Gmail](mailto:aguero.nicolas2003@gmail.com)
 
-Inside of your Astro project, you'll see the following folders and files:
+## Mis lenguajes de programación
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+![HTML](https://img.shields.io/badge/-HTML5-E34F26?logo=html5&logoColor=white&style=for-the-badge)
+![CSS](https://img.shields.io/badge/-CSS3-1572B6?logo=css3&logoColor=white&style=for-the-badge)
+![JavaScript](https://img.shields.io/badge/-JavaScript-F7DF1E?logo=javascript&logoColor=white&style=for-the-badge)
+![React](https://img.shields.io/badge/-React-61DAFB?logo=react&logoColor=white&style=for-the-badge)
+![Next.js](https://img.shields.io/badge/-Next.js-000000?logo=next.js&logoColor=white&style=for-the-badge)
+![Node.js](https://img.shields.io/badge/-Node.js-339933?logo=node.js&logoColor=white&style=for-the-badge)
+![Python](https://img.shields.io/badge/-Python-339933?logo=python&logoColor=white&style=for-the-badge)
+![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?logo=typescript&logoColor=white&style=for-the-badge)
+![Tailwind CSS](https://img.shields.io/badge/-Tailwind_CSS-38B2AC?logo=tailwind-css&logoColor=white&style=for-the-badge)
+![MongoDB](https://img.shields.io/badge/-MongoDB-47A248?logo=mongodb&logoColor=white&style=for-the-badge)
+![MySQL](https://img.shields.io/badge/-MySQL-4479A1?logo=mysql&logoColor=white&style=for-the-badge)
+![PHP](https://img.shields.io/badge/-PHP-777BB4?logo=php&logoColor=white&style=for-the-badge)
+![Astro](https://img.shields.io/badge/-Astro-05122A?logo=astro&logoColor=white&style=for-the-badge)
+![Vue.js](https://img.shields.io/badge/-Vue.js-4FC08D?logo=vue.js&logoColor=white&style=for-the-badge)
+![WordPress](https://img.shields.io/badge/-WordPress-21759B?logo=wordpress&logoColor=white&style=for-the-badge)
+![Sass](https://img.shields.io/badge/-Sass-CC6699?logo=sass&logoColor=white&style=for-the-badge)
+Entre otros...
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Lenguajes más usados
 
-## 🧞 Commands
+![Top Lenguajes](https://github-readme-stats.vercel.app/api/top-langs/?username=nicolasAguero99)
 
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+¡Gracias por visitar mi perfil! 😄
