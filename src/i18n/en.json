@@ -37,5 +37,6 @@
   },
   "LANGUAGE_SECTION": {
     "LANGUAGE_BUTTON_TEXT": "ES"
-  }
+  },
+  "ERROR_404_MESSAGE": "Redirecting to home…"
 }

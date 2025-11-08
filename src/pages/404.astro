@@ -1,0 +1,27 @@
+---
+const currentUrl = Astro.url.pathname;
+const lang = currentUrl.startsWith("/en/") ? "en/" : "";
+import { getI18N } from "../i18n";
+const i18n = getI18N(currentUrl);
+---
+
+<head>
+  <meta http-equiv='refresh' content={`0; url='/${lang}'`} />
+  <meta charset='UTF-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100dvh;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+  <p>{i18n.ERROR_404_MESSAGE}</p>
+</body>
