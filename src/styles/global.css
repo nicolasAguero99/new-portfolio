@@ -20,8 +20,10 @@
   --icon-dark-mode: "dark";
 }
 
-* {
-  cursor: none;
+@media (min-width: 900px) {
+  * {
+    cursor: none;
+  }
 }
 
 html {

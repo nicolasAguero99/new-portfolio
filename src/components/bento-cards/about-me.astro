@@ -28,14 +28,16 @@ const i18n = getI18N(Astro.url.pathname);
     <h2 class='text-3xl font-bold uppercase'>{i18n.ABOUT_ME_SECTION.TITLE}</h2>
     <p id='description' class=''></p>
   </div>
-  <button
+  <a
+    href='/CV-Nicolas_Aguero.pdf'
+    target='_blank'
     class='max-[750px]:hidden min-[900px]:hidden size-fit px-4 py-1 text-secondary text-sm border border-secondary rounded-full flex items-center gap-2 ring-offset-0 ring-1 hover:ring-2 hover:ring-offset-4 ring-offset-primary hover:[&>span]:translate-x-1 transition-all duration-300 ease-out cursor-pointer'
   >
     {i18n.ME_SECTION.CV_SECTION.BUTTON_TEXT}
     <span class='transition-transform duration-300 ease-out -rotate-45'>
       <ArrowIcon color='var(--color-secondary)' size='12' />
     </span>
-  </button>
+  </a>
 </div>
 
 <script>
