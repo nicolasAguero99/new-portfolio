@@ -34,7 +34,8 @@ import ArrowIcon from "./global/icons/arrow-icon.astro";
     </div>
     <ul
       id='navbar-ul'
-      class='min-[900px]:absolute min-[900px]:left-0 min-[900px]:right-0 min-[900px]:w-fit min-[900px]:mx-auto max-[900px]:animate-fade-in-left hidden max-[900px]:flex-col min-[900px]:gap-4 max-[900px]:absolute max-[900px]:top-0 max-[900px]:left-0 max-[900px]:size-full min-[900px]:bg-primary min-[900px]:rounded-full min-[900px]:p-2 min-[900px]:flex min-[900px]:items-center bg-transparent z-40 pt-[130px] max-[900px]:overflow-y-auto'w-full'
+      class='min-[900px]:absolute min-[900px]:left-0 min-[900px]:right-0 min-[900px]:w-fit min-[900px]:mx-auto max-[900px]:animate-fade-in-left hidden max-[900px]:flex-col min-[900px]:gap-4 max-[900px]:absolute max-[900px]:top-0 max-[900px]:left-0 max-[900px]:size-full min-[900px]:bg-primary min-[900px]:rounded-full min-[900px]:p-2 min-[900px]:flex min-[900px]:items-center bg-transparent z-40 pt-[130px] max-[900px]:overflow-y-auto'
+      w-full'
     >
       {
         NAV_LINKS.map((link) => (
@@ -43,7 +44,7 @@ import ArrowIcon from "./global/icons/arrow-icon.astro";
           >
             <a
               href={pathWithLanguage(lang, link.href)}
-              class={`flex items-center justify-between gap-2 w-full min-[900px]:rounded-full max-[600px]:px-6 max-[900px]:px-12 px-4 py-8 min-[900px]:py-1 transition-colors duration-300 ease-out ${link.href === Astro.url.pathname.replace("/en", "") ? "text-secondary bg-secondary/30 min-[900px]:bg-secondary min-[900px]:text-primary font-semibold" : "text-white hover:bg-secondary/20"}`}
+              class={`flex items-center justify-between gap-2 w-full min-[900px]:rounded-full max-[600px]:px-6 max-[900px]:px-12 px-4 py-8 min-[900px]:py-1 transition-colors duration-300 ease-out text-white`}
             >
               {lang === "en" ? link.labelEnglish : link.label}
               <span class='min-[900px]:hidden'>
@@ -71,7 +72,9 @@ import ArrowIcon from "./global/icons/arrow-icon.astro";
         class='relative bg-primary rounded-full p-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed hover:scale-90 hover:opacity-50 transition-all duration-500 ease-out'
       >
         <GlobeIcon />
-        <span class='absolute bottom-1 right-1 bg-primary text-secondary text-[10px] rounded-lg rounded-br-full p-0.5 z-10'>
+        <span
+          class='absolute bottom-1 right-1 bg-primary text-secondary text-[10px] rounded-lg rounded-br-full p-0.5 z-10'
+        >
           {i18n.LANGUAGE_SECTION.LANGUAGE_BUTTON_TEXT}
         </span>
       </a>
@@ -91,6 +94,33 @@ import ArrowIcon from "./global/icons/arrow-icon.astro";
     </div>
   </nav>
 </header>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const currentPath = window.location.pathname.replace("/en", "");
+    document.querySelectorAll("#navbar-ul a").forEach((link) => {
+      const href = link.getAttribute("href");
+
+      if (href === currentPath) {
+        link.classList.add(
+          "text-secondary",
+          "bg-secondary/30",
+          "min-[900px]:bg-secondary",
+          "min-[900px]:text-primary",
+          "font-semibold"
+        );
+      } else {
+        link.classList.remove(
+          "text-secondary",
+          "bg-secondary/30",
+          "min-[900px]:bg-secondary",
+          "min-[900px]:text-primary",
+          "font-semibold"
+        );
+      }
+    });
+  });
+</script>
 
 <script>
   document.addEventListener("astro:page-load", () => {
@@ -216,10 +246,7 @@ import ArrowIcon from "./global/icons/arrow-icon.astro";
           "--color-external-link-background",
           colorChangeThemeToReverse
         );
-        document.documentElement.style.setProperty(
-          "--color-title",
-          colorTitle
-        );
+        document.documentElement.style.setProperty("--color-title", colorTitle);
       }, 1250);
 
       window.dispatchEvent(
