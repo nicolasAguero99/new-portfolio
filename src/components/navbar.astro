@@ -96,7 +96,7 @@ import ArrowIcon from "./global/icons/arrow-icon.astro";
 </header>
 
 <script>
-  document.addEventListener("astro:page-load", () => {
+  const setActive = () => {
     const currentPath = window.location.pathname.replace("/en/", "");
     document.querySelectorAll("#navbar-ul a").forEach((link) => {
       const href = link.getAttribute("href")?.replace("/en/", "");
@@ -119,7 +119,9 @@ import ArrowIcon from "./global/icons/arrow-icon.astro";
         );
       }
     });
-  });
+  }
+  document.addEventListener("astro:page-load", setActive);
+  document.addEventListener("astro:navigate", setActive);
 </script>
 
 <script>
