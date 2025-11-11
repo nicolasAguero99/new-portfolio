@@ -97,9 +97,10 @@ import ArrowIcon from "./global/icons/arrow-icon.astro";
 
 <script>
   const setActive = () => {
-    const currentPath = window.location.pathname.replace("/en/", "");
+    const currentPath = window.location.pathname.replace("/en/", "").replaceAll("/", "");
+
     document.querySelectorAll("#navbar-ul a").forEach((link) => {
-      const href = link.getAttribute("href")?.replace("/en/", "");
+      const href = link.getAttribute("href")?.replace("/en/", "").replaceAll("/", "");
 
       if (href === currentPath) {
         link.classList.add(

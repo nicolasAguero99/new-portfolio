@@ -1,5 +1,4 @@
 import { changeThemeToDarkNeon } from "./utils";
-// @ts-ignore
 import confetti from "canvas-confetti";
 
 document.addEventListener("astro:page-load", () => gameInit());
@@ -11,6 +10,7 @@ const gameInit = () => {
   const DELAY_MAX = 3000;
   let gameRunning = false;
   let playerJumping = false;
+  let playerIsFalling = false;
   let lastSpawnTime = 0;
   let spawnTimeoutId: number | null = null;
   let gameWon = false;
@@ -169,19 +169,26 @@ const gameInit = () => {
   const jumpPlayer = (event: KeyboardEvent | TouchEvent, isSpace: boolean) => {
     if (!gameRunning) return;
     if (isSpace && (event as KeyboardEvent).code !== "Space") return;
-    if (playerJumping) return;
+    if (isSpace) {
+      event.preventDefault();
+    }
+    if (playerJumping || playerIsFalling) return;
 
     playerJumping = true;
+    playerIsFalling = false;
     playerRef.style.transform = `translateY(-100px)`;
-
-    playerRef.addEventListener(
-      "transitionend",
-      () => {
-        playerRef.style.transform = `translateY(0px)`;
+    const handleJumpUpEnd = () => {
+      playerIsFalling = true;
+      playerRef.style.transform = `translateY(0px)`;
+      const handleJumpDownEnd = () => {
         playerJumping = false;
-      },
-      { once: true }
-    );
+        playerIsFalling = false;
+      };
+      
+      playerRef.addEventListener("transitionend", handleJumpDownEnd, { once: true });
+    };
+
+    playerRef.addEventListener("transitionend", handleJumpUpEnd, { once: true });
   }
 
   const startGame = () => {
@@ -194,6 +201,9 @@ const gameInit = () => {
     gameStartScreenRef.style.opacity = "0";
     gameStartScreenRef.style.pointerEvents = "none";
     lastSpawnTime = 0;
+    playerJumping = false;
+    playerIsFalling = false;
+    playerRef.style.transform = `translateY(0px)`;
     spawnObstacle();
   };
 
