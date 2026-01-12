@@ -18,7 +18,7 @@
   "ABOUT_ME_SECTION": {
     "TITLE": "Sobre mí",
     "EXP_YEARS": "1 año",
-    "EXP_YEARS_SELF_TAUGHT": "+5 años",
+    "EXP_YEARS_SELF_TAUGHT": "",
     "DESCRIPTION": "Desarrollador Full-Stack con {{EXP_YEARS}} de experiencia laboral formal y {{EXP_YEARS_SELF_TAUGHT}} de trayectoria autodidacta/académica en soluciones propias."
   },
   "SKILLS_SECTION": {

@@ -30,8 +30,4 @@ Me recibí en Técnico Superior en Diseño y Programación Web en la [Escuela Da
 ![Sass](https://img.shields.io/badge/-Sass-CC6699?logo=sass&logoColor=white&style=for-the-badge)
 Entre otros...
 
-## Lenguajes más usados
-
-![Top Lenguajes](https://github-readme-stats.vercel.app/api/top-langs/?username=nicolasAguero99)
-
 ¡Gracias por visitar mi perfil! 😄

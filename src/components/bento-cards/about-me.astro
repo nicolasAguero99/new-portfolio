@@ -45,12 +45,29 @@ const i18n = getI18N(Astro.url.pathname);
 
   document.addEventListener("astro:page-load", () => {
     const i18n = getI18N(window.location.pathname);
+    
+    const currentYear = new Date().getFullYear();
+    const startYear = 2020;
+    const expYears = currentYear - startYear;
+    
+    const isEnglish = window.location.pathname.split('/')[1] === 'en';
+    
+    const formatSelfTaughtYears = (years: number) => {
+      if (isEnglish) {
+        return years === 1 ? `+${years} year` : `+${years} years`;
+      } else {
+        return years === 1 ? `+${years} año` : `+${years} años`;
+      }
+    };
+    
+    const expYearsSelfTaughtFormatted = formatSelfTaughtYears(expYears);
+    
     const description = i18n.ABOUT_ME_SECTION.DESCRIPTION.replace(
       "{{EXP_YEARS}}",
       "<strong>" + i18n.ABOUT_ME_SECTION.EXP_YEARS + "</strong>"
     ).replace(
       "{{EXP_YEARS_SELF_TAUGHT}}",
-      "<strong>" + i18n.ABOUT_ME_SECTION.EXP_YEARS_SELF_TAUGHT + "</strong>"
+      "<strong>" + expYearsSelfTaughtFormatted + "</strong>"
     );
 
     const descriptionElement = document.querySelector("#description");
