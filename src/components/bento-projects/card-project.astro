@@ -4,12 +4,16 @@ import GithubIcon from "../global/icons/github-icon.astro";
 import ExternalIcon from "../global/icons/external-icon.astro";
 
 const { project, index } = Astro.props;
-const currentLanguage = Astro.url.pathname.split("/")[1] == "/en" ? "en" : "es";
+const currentLanguage = Astro.url.pathname.split("/")[1] === "en" ? "en" : "es";
 ---
 
 <div
   class={`animate-blink w-full max-md:max-w-[500px] max-md:mx-auto card-project relative flex flex-col gap-4 bg-primary text-white rounded-xl p-2`}
   style={`animation-delay: ${index <= 6 ? index * 0.1 : 0.6}s;`}
+  data-type-es={project.type}
+  data-type-en={project.typeEnglish}
+  data-desc-es={project.description}
+  data-desc-en={project.descriptionEnlgish}
 >
   <div
     class='relative min-[900px]:hover:[&>#external-links-container]:opacity-100 min-[900px]:hover:[&>#external-links-container]:animate-vertical-bounce'
@@ -27,8 +31,8 @@ const currentLanguage = Astro.url.pathname.split("/")[1] == "/en" ? "en" : "es";
       />
     </a>
     <span
-      class='absolute top-0 right-0 bg-primary text-secondary rounded-bl-lg px-4 py-1 ps-5 border border-t-0 border-r-0'
-      >{currentLanguage == "es" ? project.type : project.typeEnglish}</span
+      class='absolute top-0 right-0 bg-primary text-secondary rounded-bl-lg px-4 py-1 ps-5 border border-t-0 border-r-0 card-project-type'
+      >{currentLanguage === "es" ? project.type : project.typeEnglish}</span
     >
     <div
       id='external-links-container'
@@ -61,9 +65,9 @@ const currentLanguage = Astro.url.pathname.split("/")[1] == "/en" ? "en" : "es";
   <div class='flex flex-col justify-between h-full gap-6 p-2'>
     <div class='flex flex-col gap-2'>
       <h3 class='text-2xl font-medium'>{project.title}</h3>
-      <p class='text-sm text-tertiary'>
+      <p class='text-sm text-tertiary card-project-description'>
         {
-          currentLanguage == "es"
+          currentLanguage === "es"
             ? project.description
             : project.descriptionEnlgish
         }

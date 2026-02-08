@@ -57,6 +57,17 @@ const i18n = getI18N(Astro.url.pathname);
 
 <script>
   document.addEventListener("astro:page-load", () => {
+    const isEn = window.location.pathname.split("/")[1] === "en";
+    const typeAttr = isEn ? "data-type-en" : "data-type-es";
+    const descAttr = isEn ? "data-desc-en" : "data-desc-es";
+
+    document.querySelectorAll(".card-project").forEach((card) => {
+      const typeEl = card.querySelector(".card-project-type");
+      const descEl = card.querySelector(".card-project-description");
+      if (typeEl) typeEl.textContent = card.getAttribute(typeAttr) ?? "";
+      if (descEl) descEl.textContent = card.getAttribute(descAttr) ?? "";
+    });
+
     const scrollContents = document.querySelectorAll(".custom-scroll");
 
     scrollContents.forEach((slider) => {

@@ -159,9 +159,20 @@ interface Project {
   codeLink: string
 }
 
-export type Technologies = 'Next' | 'React' | 'TypeScript' | 'React native' | 'Node' | 'Mongo Db' | 'Axios' | 'Jwt' | 'Socket.io' | 'SCSS' | 'Tailwind' | 'Three.js' | 'HTML' | 'CSS' | 'Javascript' | 'PWA' | 'API' | 'Bootstrap' | 'PHP' | 'MySql' | 'Vue' | 'Firebase' | 'Prisma' | 'Zod' | 'Chart.Js' | 'MercadoPago' | 'Zustand' | 'React-hook-forms' | 'WhatsApp' | 'Rollup' | 'Npm' | 'VS Code Extension' | 'Figma Extension' | 'Astro'
+export type Technologies = 'Next' | 'React' | 'TypeScript' | 'React native' | 'Node' | 'Mongo Db' | 'Axios' | 'Jwt' | 'Socket.io' | 'SCSS' | 'Tailwind' | 'Three.js' | 'HTML' | 'CSS' | 'Javascript' | 'PWA' | 'API' | 'Bootstrap' | 'PHP' | 'MySql' | 'Vue' | 'Firebase' | 'Prisma' | 'Zod' | 'Chart.Js' | 'MercadoPago' | 'Zustand' | 'React-hook-forms' | 'WhatsApp' | 'Rollup' | 'Npm' | 'VS Code Extension' | 'Figma Extension' | 'Astro' | 'Tauri' | 'Monaco Editor' | 'Test' | 'Docker' | 'Swagger' | 'Mocha' | 'Chai'
 
 export const PROJECTS_ITEMS: Project[] = [
+  {
+    title: 'DevGround',
+    imageSrc: '/images/DevGround.png',
+    type: 'App de escritorio',
+    typeEnglish: 'Desktop App',
+    description: 'Proyecto freelance. Es una aplicación de escritorio para experimentar con HTML, CSS y JavaScript (o solo JS) en tiempo real. Construida para aprender, practicar o probar ideas de forma cómoda y veloz.',
+    descriptionEnlgish: 'Freelance project. It is a desktop application for experimenting with HTML, CSS, and JavaScript (or only JS) in real time. Built for learning, practicing or trying out ideas in a comfortable and fast way.',
+    technologies: ['Tauri', 'React', 'Tailwind', 'TypeScript', 'Zustand', 'Monaco Editor'],
+    projectLink: 'https://github.com/nicolasAguero99/DevGround-app/releases',
+    codeLink: 'https://github.com/nicolasAguero99/DevGround-app'
+  },
   {
     title: 'Clear All Console log',
     imageSrc: '/images/clear-console-extension.jpg',
@@ -172,6 +183,17 @@ export const PROJECTS_ITEMS: Project[] = [
     technologies: ['VS Code Extension'],
     projectLink: 'https://marketplace.visualstudio.com/items?itemName=nicolasAguero99.clear-all-console-log',
     codeLink: 'https://github.com/nicolasAguero99/clear-all-console-log'
+  },
+  {
+    title: 'CoderHouse - Backend III',
+    imageSrc: '/images/CoderHouse-backend-3.png',
+    type: 'Entrega Final',
+    typeEnglish: 'Final Delivery',
+    description: 'Proyecto final del curso Backend III de CoderHouse. API REST dockerizada con Node.js y MongoDB: sistema de usuarios, adopción de mascotas, documentación Swagger y tests funcionales con Mocha y Chai.',
+    descriptionEnlgish: 'Final project for CoderHouse\'s Backend III course. Dockerized REST API with Node.js and MongoDB: user system, pet adoption flow, Swagger documentation, and functional tests with Mocha and Chai.',
+    technologies: ['Node', 'Docker', 'Swagger', 'Mocha', 'Chai', 'Test', 'Mongo Db'],
+    projectLink: 'https://hub.docker.com/r/nicoagueroo99/entrega-final-coder',
+    codeLink: 'https://github.com/nicolasAguero99/coderhouse-backend-3'
   },
   {
     title: 'Multiple font resizer',
