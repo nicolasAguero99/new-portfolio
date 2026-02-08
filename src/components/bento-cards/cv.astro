@@ -3,12 +3,26 @@ import ArrowIcon from "../global/icons/arrow-icon.astro";
 import { getI18N } from "../../i18n";
 import ButtonLink from "../global/button-link.astro";
 const i18n = getI18N(Astro.url.pathname);
+const cvLink = Astro.url.pathname.startsWith("/en")
+  ? "/CV-English-Nicolas_Aguero.pdf"
+  : "/CV-Nicolas_Aguero.pdf";
 ---
 
-<div id='cv-card' class='cv-card flex flex-col gap-4 justify-between bg-primary text-white rounded-card p-6 size-full'>
+<div
+  id='cv-card'
+  class='cv-card flex flex-col gap-4 justify-between bg-primary text-white rounded-card p-6 size-full'
+>
   <div class='flex flex-col gap-2 justify-between'>
-    <h2 class='text-3xl font-bold uppercase'>{i18n.ME_SECTION.CV_SECTION.TITLE}</h2>
+    <h2 class='text-3xl font-bold uppercase'>
+      {i18n.ME_SECTION.CV_SECTION.TITLE}
+    </h2>
     <p class=''>{i18n.ME_SECTION.CV_SECTION.DESCRIPTION}</p>
   </div>
-  <ButtonLink href='/CV-Nicolas_Aguero.pdf' backgroundColor='bg-secondary' color='var(--color-primary)' size='16' external />
+  <ButtonLink
+    href={cvLink}
+    backgroundColor='bg-secondary'
+    color='var(--color-primary)'
+    size='16'
+    external
+  />
 </div>

@@ -69,16 +69,24 @@ const i18n = getI18N(Astro.url.pathname);
   </div>
 </div>
 
-<script define:vars={{ i18n }}>
+<script>
+  import { getI18N } from "../../i18n";
+
   document.addEventListener("astro:page-load", () => {
-    const gameStartButtonText =
-      i18n.ME_SECTION.GAME_SECTION.START_BUTTON.replace(
-        "{{key}}",
-        "<span class='text-primary bg-secondary px-2 py-1 rounded-md font-semibold text-vertical-reverse'>]</span>"
-      );
+    const i18n = getI18N(window.location.pathname);
+
+    const gameStartButtonText = i18n.ME_SECTION.GAME_SECTION.START_BUTTON.replace(
+      "{{key}}",
+      "<span class='text-primary bg-secondary px-2 py-1 rounded-md font-semibold text-vertical-reverse'>]</span>"
+    );
     const gameStartTextElement = document.getElementById("gameStartText");
     if (gameStartTextElement) {
       gameStartTextElement.innerHTML = gameStartButtonText;
+    }
+
+    const gameStartText2 = document.getElementById("gameStartText2");
+    if (gameStartText2) {
+      gameStartText2.textContent = i18n.ME_SECTION.GAME_SECTION.EASTER_EGG;
     }
   });
 </script>
