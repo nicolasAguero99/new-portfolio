@@ -2,6 +2,9 @@
 import { getI18N } from "../../i18n";
 import ArrowIcon from "../global/icons/arrow-icon.astro";
 const i18n = getI18N(Astro.url.pathname);
+const cvLink = Astro.url.pathname.startsWith("/en")
+  ? "/CV-English-Nicolas_Aguero.pdf"
+  : "/CV-Nicolas_Aguero.pdf";
 ---
 
 <div
@@ -39,7 +42,7 @@ const i18n = getI18N(Astro.url.pathname);
       <h2 id='me-name' class='text-3xl font-bold uppercase'>Nicolás Agüero</h2>
     </div>
     <a
-      href='/CV-Nicolas_Aguero.pdf'
+      href={cvLink}
       target='_blank'
       class='min-[1180px]:hidden size-fit px-4 py-1 text-secondary text-sm border border-secondary rounded-full flex items-center gap-2 ring-offset-0 ring-1 hover:ring-2 hover:ring-offset-4 ring-offset-primary hover:[&>span]:translate-x-1 transition-all duration-300 ease-out cursor-pointer'
     >

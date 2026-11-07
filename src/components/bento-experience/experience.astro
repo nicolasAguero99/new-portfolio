@@ -1,21 +1,213 @@
 ---
 import { EXPERIENCE_ITEMS } from "../../constants/constants";
 import { getI18N } from "../../i18n";
+import ChevronIcon from "../global/icons/chevron-icon.astro";
 const i18n = getI18N(Astro.url.pathname);
 const currentLanguage = Astro.url.pathname.startsWith("/en") ? "en" : "es";
+const experiences = EXPERIENCE_ITEMS[currentLanguage];
+const labels =
+  currentLanguage === "en"
+    ? { prev: "Previous experience", next: "Next experience" }
+    : { prev: "Experiencia anterior", next: "Experiencia siguiente" };
 ---
 
-<div class='experience-card relative flex flex-col justify-between gap-4 bg-primary text-white rounded-card p-6 max-[900px]:order-1'>
-  <div class='flex flex-col gap-2'>
-  <h2 class='text-3xl font-bold uppercase'>{i18n.EXPERIENCE_SECTION.EXPERIENCE}</h2>
-    <p class='text-sm text-tertiary'>{EXPERIENCE_ITEMS[currentLanguage][0].company}</p>
-    <h3 class='text-2xl font-medium'>{EXPERIENCE_ITEMS[currentLanguage][0].title}</h3>
-    <p class='text-sm text-tertiary'>{EXPERIENCE_ITEMS[currentLanguage][0].date}</p>
-    <p class='font-light mt-2 max-[1100px]:text-sm'>{EXPERIENCE_ITEMS[currentLanguage][0].description}</p>
+<div
+  class="experience-card relative flex min-h-0 flex-col gap-4 overflow-hidden bg-primary text-white rounded-card p-6 max-[900px]:order-1"
+  data-experience-card
+>
+  <div class="flex items-center justify-between gap-2">
+    <h2 class="text-3xl font-bold uppercase">{i18n.EXPERIENCE_SECTION.EXPERIENCE}</h2>
+    <div class="flex gap-2">
+      <button
+        type="button"
+        class="rotate-180 cursor-pointer transition-all duration-300 ease-out hover:scale-90 disabled:cursor-not-allowed disabled:opacity-50"
+        data-experience-prev
+        aria-label={labels.prev}
+        disabled
+      >
+        <ChevronIcon color="var(--color-secondary)" size="32" />
+      </button>
+      <button
+        type="button"
+        class="cursor-pointer transition-all duration-300 ease-out hover:scale-90 disabled:cursor-not-allowed disabled:opacity-50"
+        data-experience-next
+        aria-label={labels.next}
+      >
+        <ChevronIcon color="var(--color-secondary)" size="32" />
+      </button>
+    </div>
   </div>
-    <div class='flex flex-wrap gap-2'>
-      {EXPERIENCE_ITEMS[currentLanguage][0].skills.map((skill) => (
-        <span class='text-sm text-secondary border border-secondary px-3 rounded-full'>{skill}</span>
-      ))}
+
+  <div class="experience-stage" aria-live="polite">
+    {
+      experiences.map((item, index) => (
+        <article
+          class:list={["experience-panel", { "is-active": index === 0 }]}
+          id={`experience-panel-${index}`}
+          aria-hidden={index === 0 ? "false" : "true"}
+          inert={index !== 0 ? true : undefined}
+          data-experience-panel={index}
+        >
+          <div class="experience-copy">
+            <p class="text-sm text-tertiary">{item.company}</p>
+            <h3 class="text-xl font-medium min-[1100px]:text-2xl">{item.title}</h3>
+            <p class="text-sm text-tertiary">{item.date}</p>
+            <p class="mt-2 font-light max-[1100px]:text-sm">{item.description}</p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            {item.skills.map((skill) => (
+              <span
+                class="experience-skill rounded-full border border-secondary px-3 text-sm text-secondary"
+                data-experience-skill
+              >
+                {skill}
+              </span>
+            ))}
+          </div>
+        </article>
+      ))
+    }
   </div>
 </div>
+
+<style>
+  .experience-stage {
+    display: grid;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .experience-panel {
+    grid-area: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 0;
+    visibility: hidden;
+    will-change: transform, opacity;
+  }
+
+  .experience-panel.is-active {
+    visibility: visible;
+  }
+
+  .experience-copy {
+    min-height: 0;
+    overflow: auto;
+  }
+</style>
+
+<script>
+  import { gsap } from "gsap";
+
+  const CLEANUP_KEY = "__experienceSwitchCleanup";
+
+  const setupExperienceSwitch = () => {
+    const previousCleanup = (window as Window & { [CLEANUP_KEY]?: () => void })[CLEANUP_KEY];
+    previousCleanup?.();
+
+    const card = document.querySelector<HTMLElement>("[data-experience-card]");
+    if (!card) {
+      delete (window as Window & { [CLEANUP_KEY]?: () => void })[CLEANUP_KEY];
+      return;
+    }
+
+    const panels = [...card.querySelectorAll<HTMLElement>("[data-experience-panel]")];
+    const prevBtn = card.querySelector<HTMLButtonElement>("[data-experience-prev]");
+    const nextBtn = card.querySelector<HTMLButtonElement>("[data-experience-next]");
+    if (!panels.length || !prevBtn || !nextBtn) return;
+
+    const abortController = new AbortController();
+    const { signal } = abortController;
+    let timeline: gsap.core.Timeline | undefined;
+    let mm: gsap.MatchMedia | undefined;
+    let index = 0;
+    let reduceMotion = false;
+
+    const teardown = () => {
+      timeline?.kill();
+      abortController.abort();
+      mm?.revert();
+    };
+    (window as Window & { [CLEANUP_KEY]?: () => void })[CLEANUP_KEY] = teardown;
+
+    const syncControls = (i: number) => {
+      prevBtn.disabled = i === 0;
+      nextBtn.disabled = i === panels.length - 1;
+    };
+
+    const go = (nextIndex: number, direction: number) => {
+      if (nextIndex === index || nextIndex < 0 || nextIndex >= panels.length) return;
+
+      const outgoing = panels[index];
+      const incoming = panels[nextIndex];
+      const skills = incoming.querySelectorAll<HTMLElement>("[data-experience-skill]");
+      const motionDuration = reduceMotion ? 0 : 1;
+      const distance = 32;
+
+      timeline?.kill();
+
+      outgoing.setAttribute("aria-hidden", "true");
+      outgoing.setAttribute("inert", "");
+      incoming.removeAttribute("inert");
+      incoming.setAttribute("aria-hidden", "false");
+      syncControls(nextIndex);
+
+      timeline = gsap.timeline({ defaults: { overwrite: "auto" } });
+      timeline.to(
+        outgoing,
+        { x: -distance * direction, autoAlpha: 0, duration: 0.22 * motionDuration, ease: "power2.in" },
+        0
+      );
+      timeline.fromTo(
+        incoming,
+        { x: distance * direction, autoAlpha: 0 },
+        { x: 0, autoAlpha: 1, duration: 0.4 * motionDuration, ease: "power3.out" },
+        0.08 * motionDuration
+      );
+      if (skills.length) {
+        timeline.fromTo(
+          skills,
+          { y: 10, autoAlpha: 0 },
+          {
+            y: 0,
+            autoAlpha: 1,
+            duration: 0.32 * motionDuration,
+            stagger: 0.04 * motionDuration,
+            ease: "power3.out",
+          },
+          0.16 * motionDuration
+        );
+      }
+
+      index = nextIndex;
+    };
+
+    mm = gsap.matchMedia();
+    mm.add(
+      {
+        always: "(min-width: 0px)",
+        reduceMotion: "(prefers-reduced-motion: reduce)",
+      },
+      (context) => {
+        reduceMotion = Boolean(context.conditions?.reduceMotion);
+        panels.forEach((panel, panelIndex) => {
+          gsap.set(panel, { x: 0, autoAlpha: panelIndex === index ? 1 : 0 });
+        });
+        return () => {
+          timeline?.kill();
+        };
+      }
+    );
+
+    prevBtn.addEventListener("click", () => go(index - 1, -1), { signal });
+    nextBtn.addEventListener("click", () => go(index + 1, 1), { signal });
+  };
+
+  document.addEventListener("astro:before-swap", () => {
+    (window as Window & { [CLEANUP_KEY]?: () => void })[CLEANUP_KEY]?.();
+  });
+  document.addEventListener("astro:page-load", setupExperienceSwitch);
+</script>

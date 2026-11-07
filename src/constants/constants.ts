@@ -24,16 +24,16 @@ export const NAV_LINKS = [
 export const EDUCATION_ITEMS = {
   es: [
     {
+      school: 'Coderhouse',
+      title: 'Backend III: Testing y Escalabilidad Backend',
+      date: 'Diciembre 2025 - Enero 2026 (2 meses)',
+      description: 'Formación en testing y escalabilidad de backend.',
+    },
+    {
       school: 'Escuela Da Vinci',
       title: 'Técnico superior en desarrollo y diseño web',
       date: 'Marzo de 2022 - Diciembre 2023 (2 años)',
       description: 'Promedio de 9,52. Formación técnica orientada al desarrollo Full-stack, diseño responsivo, creación de contenido digital y tecnologías web modernas.',
-    },
-    {
-      school: 'Aprendé programando',
-      title: 'Curso de Desarrollo web (Frontend y Backend)',
-      date: 'Marzo de 2021 (1 mes)',
-      description: 'Formación en desarrollo web Frontend y Backend, creación de contenido digital y tecnologías web modernas.',
     },
     {
       school: 'New Way Institute',
@@ -50,16 +50,16 @@ export const EDUCATION_ITEMS = {
   ],
   en: [
     {
+      school: 'Coderhouse',
+      title: 'Backend III: Testing and Scalability Backend',
+      date: 'December 2025 - January 2026 (2 months)',
+      description: 'Training in backend testing and scalability.',
+    },
+    {
       school: 'Da Vinci School',
       title: 'Technical superior in web development and design',
       date: 'March 2022 to December 2023',
       description: 'Average of 9.52. Technical training oriented to Full-stack development, responsive design, digital content creation and modern web technologies.',
-    },
-    {
-      school: 'Aprendé programando',
-      title: 'Curso de Desarrollo web (Frontend y Backend)',
-      date: 'March 2021 (1 month)',
-      description: 'Formation in web development Frontend and Backend, digital content creation and modern web technologies.',
     },
     {
       school: 'New Way Institute',
@@ -79,19 +79,33 @@ export const EDUCATION_ITEMS = {
 export const EXPERIENCE_ITEMS = {
   es: [
     {
+      company: 'Fanz',
+      title: 'Desarrollador Product Engineer / Full-stack',
+      date: 'Marzo 2026 - Noviembre 2026 (9 meses)',
+      description: 'Desarrollo de un constructor de sitios con IA (wizard, editor visual y generación desde prompts), editores drag-and-drop de emails y tickets, y flujos de onboarding. Mantenimiento, hotfixes y una UX simple para usuarios de cualquier nivel técnico.',
+      skills: ['React', 'Next.js', 'Node', 'TypeScript', 'Prisma'],
+    },
+    {
       company: 'Pulpou',
-      title: 'Desarrollador Full Stack',
-      date: 'Septiembre 2024 - Septiembre 2025 (1 año y 1 mes)',
-      description: 'Creación y mantenimiento de una plataforma de Brand Protection para grandes empresas, con funcionalidades que detectan infracciones de propiedad intelectual en marketplaces. Desarrollo Full Stack de una SPA con filtros dinámicos, renderizado condicional y gestión de estado en tiempo real + UI responsiva en Bootstrap y Atomizer para facilitar la auditoría y gestión masiva.',
+      title: 'Desarrollador Full-stack',
+      date: 'Septiembre 2024 - Septiembre 2025 (1 año y un mes)',
+      description: 'Creación y mantenimiento de la plataforma de Brand Protection para grandes empresas, con funcionalidades para identificar infracciones de propiedad intelectual en marketplaces y e-commerce. SPA con React y APIs en Node.js, filtros dinámicos, renderizado condicional y estado en tiempo real, más UI responsiva en Bootstrap y Atomizer para auditoría y gestión masiva.',
       skills: ['React', 'Node', 'SQL', 'AI', 'Bootstrap', 'Atomizer'],
     },
   ],
   en: [
     {
+      company: 'Fanz',
+      title: 'Front End Developer',
+      date: 'March 2026 - November 2026 (9 months)',
+      description: 'Built an AI website builder (wizard, visual editor, and generation from prompts), drag-and-drop email and ticket editors, and onboarding flows. Ongoing maintenance, hotfixes, and simple UX for users of any technical level.',
+      skills: ['React', 'Next.js', 'Node', 'TypeScript', 'Prisma'],
+    },
+    {
       company: 'Pulpou',
-      title: 'Full Stack Developer',
-      date: 'September 2024 - September 2025 (1 year and 1 month)',
-      description: 'Creation and maintenance of a Brand Protection platform for large companies, with features that detect intellectual property infringements in marketplaces. Full Stack development of a SPA with dynamic filters, conditional rendering and real-time state management + responsive UI in Bootstrap and Atomizer to facilitate audit and mass management.',
+      title: 'Full-stack Developer',
+      date: 'September 2024 - September 2025 (1 year and one month)',
+      description: 'Creation and maintenance of the Brand Protection platform for large companies, with features to identify intellectual property infringements in global marketplaces and e-commerce. SPA with React and Node.js APIs, dynamic filters, conditional rendering, and real-time state management, plus a responsive UI in Bootstrap and Atomizer for large-scale auditing.',
       skills: ['React', 'Node', 'SQL', 'AI', 'Bootstrap', 'Atomizer'],
     },
   ],
@@ -99,6 +113,13 @@ export const EXPERIENCE_ITEMS = {
 
 export const FREELANCE_ITEMS = {
   es: [
+    {
+      company: 'Wowina',
+      title: 'Desarrollador Full-stack',
+      date: 'Noviembre 2025 - Julio 2026 (8 meses)',
+      description: 'Desarrollo de un sitio web para marca personal orientado a la captación de clientes y presentación de servicios como Agente Disney certificada, con enfoque en UX/UI, performance y SEO.',
+      skills: ['Next.js', 'TypeScript', 'TailwindCSS'],
+    },
     {
       company: 'Igrowker',
       title: 'Desarrollador Front-end',
@@ -122,6 +143,13 @@ export const FREELANCE_ITEMS = {
     },
   ],
   en: [
+    {
+      company: 'Wowina',
+      title: 'Full-stack Developer',
+      date: 'November 2025 - July 2026 (8 months)',
+      description: 'Development of a personal branding website focused on client acquisition and showcasing services as a certified Disney Agent, with an emphasis on UX/UI, performance, and SEO.',
+      skills: ['Next.js', 'TypeScript', 'TailwindCSS'],
+    },
     {
       company: 'Igrowker',
       title: 'Front-end Developer',
